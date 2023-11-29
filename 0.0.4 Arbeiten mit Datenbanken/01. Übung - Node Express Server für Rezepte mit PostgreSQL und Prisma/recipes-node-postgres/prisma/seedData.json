@@ -1,0 +1,164 @@
+{
+	"users": [
+		{
+			"username": "Alice",
+			"email": "alice@example.com",
+			"recipes": [
+				{
+					"title": "Spaghetti Bolognese",
+					"description": "Klassisches italienisches Pasta-Gericht",
+					"preparation": "Nudeln kochen. Rinderhack anbraten, Tomatensauce hinzufügen und köcheln lassen. Über die Nudeln servieren.",
+					"ingredients": [
+						{
+							"name": "Rinderhack",
+							"quantity": 300,
+							"unitOfMass": "gr"
+						},
+						{
+							"name": "Tomatensauce",
+							"quantity": 500,
+							"unitOfMass": "ml"
+						},
+						{
+							"name": "Spaghetti",
+							"quantity": 400,
+							"unitOfMass": "gr"
+						}
+					]
+				},
+				{
+					"title": "Caesar Salat mit Hähnchen",
+					"description": "Klassischer Caesar-Salat mit gegrilltem Hähnchen",
+					"preparation": "Hähnchen grillen, Salat hacken, mit Caesar-Dressing vermengen und mit Croutons bestreuen.",
+					"ingredients": [
+						{
+							"name": "Hähnchenbrust",
+							"quantity": 2,
+							"unitOfMass": "Stück"
+						},
+						{
+							"name": "Römersalat",
+							"quantity": 1,
+							"unitOfMass": "Stück"
+						},
+						{
+							"name": "Caesar-Dressing",
+							"quantity": 150,
+							"unitOfMass": "ml"
+						},
+						{
+							"name": "Croutons",
+							"quantity": 50,
+							"unitOfMass": "gr"
+						}
+					]
+				}
+			]
+		},
+		{
+			"username": "Bob",
+			"email": "bob@example.com",
+			"recipes": [
+				{
+					"title": "Schoko-Chip-Cookies",
+					"description": "Klassische selbstgemachte Schoko-Chip-Cookies",
+					"preparation": "Zutaten mischen, Teigbällchen formen und backen, bis sie goldbraun sind.",
+					"ingredients": [
+						{
+							"name": "Butter",
+							"quantity": 200,
+							"unitOfMass": "gr"
+						},
+						{
+							"name": "Schokoladenstückchen",
+							"quantity": 300,
+							"unitOfMass": "gr"
+						},
+						{
+							"name": "Mehl",
+							"quantity": 250,
+							"unitOfMass": "gr"
+						}
+					]
+				}
+			]
+		},
+		{
+			"username": "Charlie",
+			"email": "charlie@example.com",
+			"recipes": [
+				{
+					"title": "Gemüsepfanne",
+					"description": "Bunte Gemüsepfanne mit Reis",
+					"preparation": "Gemüse schneiden, in Öl anbraten, mit Gewürzen abschmecken und über Reis servieren.",
+					"ingredients": [
+						{
+							"name": "Paprika",
+							"quantity": 2,
+							"unitOfMass": "Stück"
+						},
+						{
+							"name": "Zucchini",
+							"quantity": 1,
+							"unitOfMass": "Stück"
+						},
+						{
+							"name": "Karotten",
+							"quantity": 150,
+							"unitOfMass": "gr"
+						},
+						{
+							"name": "Reis",
+							"quantity": 200,
+							"unitOfMass": "gr"
+						}
+					]
+				},
+				{
+					"title": "Tomatensuppe",
+					"description": "Einfache Tomatensuppe mit frischen Tomaten",
+					"preparation": "Tomaten würfeln, in Brühe kochen, pürieren und mit Gewürzen abschmecken.",
+					"ingredients": [
+						{
+							"name": "Frische Tomaten",
+							"quantity": 500,
+							"unitOfMass": "gr"
+						},
+						{
+							"name": "Gemüsebrühe",
+							"quantity": 750,
+							"unitOfMass": "ml"
+						},
+						{
+							"name": "Zwiebeln",
+							"quantity": 2,
+							"unitOfMass": "Stück"
+						}
+					]
+				},
+				{
+					"title": "Pfannkuchen",
+					"description": "Luftige Pfannkuchen zum Frühstück",
+					"preparation": "Teig zubereiten, in der Pfanne ausbacken und mit Sirup servieren.",
+					"ingredients": [
+						{
+							"name": "Mehl",
+							"quantity": 200,
+							"unitOfMass": "gr"
+						},
+						{
+							"name": "Milch",
+							"quantity": 300,
+							"unitOfMass": "ml"
+						},
+						{
+							"name": "Eier",
+							"quantity": 3,
+							"unitOfMass": "Stück"
+						}
+					]
+				}
+			]
+		}
+	]
+}
