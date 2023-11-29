@@ -5,11 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "nodemon index.js",
-		"pretest": "pkill -f index.js && ./reset_db.sh && node index.js &",
-		"test": "NODE_ENV=test npx jest",
-		"posttest": "pkill -f index.js && npm start",
-		"reset-db": "bash reset_db.sh",
-		"seed": "npm run reset-db && prisma db seed"
+		"test": "NODE_ENV=test npx jest"
 	},
 	"prisma": {
 		"seed": "node ./prisma/seed.js"
