@@ -1,6 +1,6 @@
 const request = require('supertest');
 // Wir importieren die app und start Funktionen aus unserer Hauptserverdatei.
-const { app, start } = require('../../index.js');
+const { app, start } = require('../index.js');
 
 const {
 	getAllUsers,
@@ -8,7 +8,7 @@ const {
 	createUser,
 	updateUser,
 	deleteUser,
-} = require('../../controllers/userController.js');
+} = require('../controllers/userController.js');
 
 // Mocken des userModel Moduls:
 jest.mock('../../models/userModel', () => {
@@ -37,7 +37,7 @@ const {
 	createUser: mockCreateUser,
 	updateUser: mockUpdateUser,
 	deleteUser: mockDeleteUser,
-} = require('../../models/userModel.js');
+} = require('../models/userModel.js');
 
 // Wir definieren unsere Routen.
 app.get('/users', getAllUsers);
