@@ -10,7 +10,7 @@ const {
 	deleteUser,
 } = require('../../controllers/userController.js');
 
-// Mock the userModel module
+// Mocken des userModel Moduls:
 jest.mock('../../models/userModel', () => {
 	return {
 		getAllUsers: jest.fn(),
@@ -46,7 +46,9 @@ app.post('/users', createUser);
 app.put('/users/:userId', updateUser);
 app.delete('/users/:userId', deleteUser);
 
-describe('Express Server Tests', () => {
+// ********* User Tests *********
+
+describe('User Server Tests', () => {
 	let server;
 	const port = 3001;
 
@@ -65,8 +67,6 @@ describe('Express Server Tests', () => {
 		jest.resetAllMocks();
 		// jest.clearAllMocks();
 	});
-
-	// ********* User Tests *********
 
 	// Test GET /users Endpoint:
 	describe('GET /users Endpoint Tests', () => {
