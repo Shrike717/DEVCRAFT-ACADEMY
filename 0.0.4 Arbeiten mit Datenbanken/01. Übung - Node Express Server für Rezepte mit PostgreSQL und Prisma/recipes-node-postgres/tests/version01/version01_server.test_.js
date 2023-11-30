@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const request = require('supertest');
 // Wir importieren die app und start Funktionen aus unserer Hauptserverdatei.
-const { app, start } = require('../index.js');
+const { app, start } = require('../../index.js');
 
 // Wir simulieren das '@prisma/client' Paket, um die Datenbankoperationen in unseren Tests zu kontrollieren.
 jest.mock('@prisma/client');
