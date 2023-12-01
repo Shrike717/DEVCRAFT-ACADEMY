@@ -2,6 +2,9 @@ const request = require('supertest');
 // Wir importieren die app und start Funktionen aus unserer Hauptserverdatei.
 const { app, start } = require('../index.js');
 
+// ******** ACHTTUNG ********
+// In diesen Tests werden die Prisma Models komplett gemocked. Es werden nur die Controller Action als Unit Tests getestet.
+
 const {
 	getAllUsers,
 	getUserById,
