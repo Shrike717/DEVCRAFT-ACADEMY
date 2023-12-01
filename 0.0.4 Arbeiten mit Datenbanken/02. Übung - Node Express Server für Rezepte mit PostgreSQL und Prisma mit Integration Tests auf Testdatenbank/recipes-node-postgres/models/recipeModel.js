@@ -1,6 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-
-const prisma = new PrismaClient();
+// Import des Prisma Client:
+const { prisma } = require('../prisma/index');
 
 exports.getAllRecipes = async () => {
 	return prisma.recipe.findMany();
