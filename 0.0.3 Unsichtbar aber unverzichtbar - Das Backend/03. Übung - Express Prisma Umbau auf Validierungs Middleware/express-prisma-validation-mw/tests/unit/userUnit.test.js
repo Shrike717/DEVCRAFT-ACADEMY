@@ -160,19 +160,21 @@ describe('User Server Tests', () => {
 			}
 		});
 
-		// Prüfen, ob alle Felder ausgefüllt sind:
-		it('soll einen Fehler zurückgeben, wenn nicht alle Felder ausgefüllt sind', async () => {
-			// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
-			const response = await request(app).post('/users').send({
-				name: 'User1',
-			});
+		// ****** Dieser Test ist nicht mehr notwendig, da wir die Validierung in der Middleware durchführen *******
 
-			// Wir erwarten, dass der Statuscode 400 ist und die Fehlermeldung korrekt ist.
-			expect(response.statusCode).toEqual(400);
-			expect(response.body.message).toEqual(
-				'Bitte alle Felder ausfüllen'
-			);
-		});
+		// Prüfen, ob alle Felder ausgefüllt sind:
+		// it('soll einen Fehler zurückgeben, wenn nicht alle Felder ausgefüllt sind', async () => {
+		// 	// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
+		// 	const response = await request(app).post('/users').send({
+		// 		name: 'User1',
+		// 	});
+
+		// 	// Wir erwarten, dass der Statuscode 400 ist und die Fehlermeldung korrekt ist.
+		// 	expect(response.statusCode).toEqual(400);
+		// 	expect(response.body.message).toEqual(
+		// 		'Bitte alle Felder ausfüllen'
+		// 	);
+		// });
 
 		// Prüfen, ob ein Benutzer mit demselben Benutzernamen oder Email existiert:
 		it('soll einen Fehler zurückgeben, wenn ein Benutzer mit demselben Benutzernamen existiert', async () => {

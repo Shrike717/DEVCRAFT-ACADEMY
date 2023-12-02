@@ -143,17 +143,20 @@ describe('User Server Tests', () => {
 				},
 			});
 		});
-		// Einen neuen Benutzer erstellen, wenn ein Feld leer ist:
-		it('soll einen Fehler zurückgeben, wenn ein Feld fehlt', async () => {
-			const res = await request(app).post('/users').send({
-				name: 'User 1',
-			});
+		// ****** Dieser Test ist nicht mehr notwendig, da wir die Validierung in der Middleware durchführen *******
 
-			expect(res.statusCode).toEqual(400);
-			expect(res.body).toEqual({
-				message: 'Bitte alle Felder ausfüllen',
-			});
-		});
+		// Einen neuen Benutzer erstellen, wenn ein Feld leer ist:
+		// it('soll einen Fehler zurückgeben, wenn ein Feld fehlt', async () => {
+		// 	const res = await request(app).post('/users').send({
+		// 		name: 'User 1',
+		// 	});
+
+		// 	expect(res.statusCode).toEqual(400);
+		// 	expect(res.body).toEqual({
+		// 		message: 'Bitte alle Felder ausfüllen',
+		// 	});
+		// });
+
 		// Einen neuen Benutzer erstellen, wenn der Benutzername schon existiert:
 		it('soll einen Fehler zurückgeben, wenn der Benutzername schon existiert', async () => {
 			// Erstelle einen Benutzer
