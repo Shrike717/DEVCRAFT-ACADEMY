@@ -10,9 +10,10 @@
 		"start": "NODE_ENV=development nodemon index.js",
 		"test": "NODE_ENV=testserver jest",
 		"see-dev-db": "dotenv -e .env.development -- npx prisma studio",
-		"see-test-db": "dotenv -e .env.test --  npx prisma studio",
+		"see-test-db": "dotenv -e .env.test -- npx prisma studio",
 		"drop-dev-db": "dotenv -e .env.development -- ./reset_db-main.sh",
-		"drop-test-db": "dotenv -e .env.test -- ./reset_db-test.sh"
+		"drop-test-db": "dotenv -e .env.test -- ./reset_db-test.sh",
+		"seed": "dotenv -e .env.development -- ./reset_db-main.sh && dotenv -e .env.development -- node ./prisma/seed.js"
 	},
 	"jest": {
 		"testEnvironment": "node"
@@ -29,7 +30,6 @@
 		"prisma": "^5.6.0"
 	},
 	"devDependencies": {
-		"cross-env": "^7.0.3",
 		"jest": "^29.7.0",
 		"supertest": "^6.3.3"
 	}
