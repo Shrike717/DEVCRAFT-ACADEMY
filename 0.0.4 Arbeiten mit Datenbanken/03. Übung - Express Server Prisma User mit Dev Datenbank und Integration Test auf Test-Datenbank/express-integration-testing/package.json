@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"start": "NODE_ENV=development nodemon index.js",
-		"test": "NODE_ENV=testserver jest",
+		"test": "NODE_ENV=testserver && dotenv -e .env.test -- jest",
 		"see-dev-db": "dotenv -e .env.development -- npx prisma studio",
 		"see-test-db": "dotenv -e .env.test -- npx prisma studio",
 		"drop-dev-db": "dotenv -e .env.development -- ./reset_db-main.sh",
