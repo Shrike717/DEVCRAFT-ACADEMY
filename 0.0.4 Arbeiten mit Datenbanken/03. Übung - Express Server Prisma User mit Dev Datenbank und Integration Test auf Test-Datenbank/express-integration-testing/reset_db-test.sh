@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Replace these with your database name and user
-DATABASE_NAME="db_main"
+DATABASE_NAME="db_test"
 DATABASE_USER="danielbauer"
 
 # Drop the dev database
