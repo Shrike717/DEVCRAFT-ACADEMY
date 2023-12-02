@@ -1,5 +1,4 @@
-//
-
+// Diese Loks zeigen, ob der Server auf die Dev-Datenbank oder auf die Test-Datenbank zugreift.
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
