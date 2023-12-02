@@ -17,7 +17,7 @@ function start(port) {
 }
 
 if (require.main === module) {
-	// This module was run directly from the command line as in node xxx.js
+	// Startet den Server nur, wenn index.js direkt ausgeführt wird.
 	start(port);
 }
 
