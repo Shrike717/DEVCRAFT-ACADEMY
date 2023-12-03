@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 
 // ********** Auth **********
 
-exports.signup = async (name, email, password) => {
+exports.signupUser = async (name, email, password) => {
 	const existingUser = await prisma.user.findFirst({
 		where: {
 			OR: [{ name: name }, { email: email }],
@@ -45,7 +45,7 @@ exports.signup = async (name, email, password) => {
 	return { user: newUser, token };
 };
 
-exports.login = async (email, password) => {
+exports.loginUser = async (email, password) => {
 	const user = await prisma.user.findFirst({
 		where: { email: email },
 	});

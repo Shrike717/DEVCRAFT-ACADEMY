@@ -2,6 +2,8 @@
 const request = require('supertest');
 const { app, start } = require('../../index.js');
 
+// TODO: Dieser Test funktioniert nach der Authentication nicht mehr! Überprüfen, was los ist
+
 describe('User Server Tests', () => {
 	let server;
 	const port = 3001;

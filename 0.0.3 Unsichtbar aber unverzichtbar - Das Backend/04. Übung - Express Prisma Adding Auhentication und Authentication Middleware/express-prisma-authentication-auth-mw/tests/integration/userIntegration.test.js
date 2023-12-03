@@ -152,6 +152,8 @@ describe('User Server Tests', () => {
 	});
 
 	describe('POST /users', () => {
+		// TODO: Den alten Test Blog für POST/users wiederherstellen und auskommentieren
+		// TODO: Tests für Login schreiben
 		// ******** Dieser Test wird durch den Test SignUp ersetzt ********
 
 		// Einen neuen Benutzer erstellen:
@@ -197,6 +199,7 @@ describe('User Server Tests', () => {
 			});
 
 			expect(res.statusCode).toEqual(201);
+			console.log('Integration Test, res.body:', res.body);
 			expect(res.body).toEqual({
 				message: 'Benutzer wurde erfolgreich erstellt',
 				newUser: {
@@ -204,7 +207,7 @@ describe('User Server Tests', () => {
 					name: 'User 1',
 					email: 'user1@example.com',
 				},
-				token: expect.any(String), // Wir erwarten, dass ein Token als String zurückgegeben wird, kennen aber den genauen Wert nicht.
+				token: expect.any(String), // Wir können nicht genau vorhersagen, wie der Token aussieht, aber wir wissen, dass er ein String ist.
 			});
 		});
 
