@@ -13,9 +13,16 @@ const {
 	deleteUser,
 } = require('../../src/controllers/userController');
 
+const {
+	signupUser,
+	loginUser,
+} = require('../../src/controllers/authController');
+
 // Mocken des userModel Moduls:
 jest.mock('../../src/models/userModel', () => {
 	return {
+		signupUser: jest.fn(),
+		loginUser: jest.fn(),
 		getAllUsers: jest.fn(),
 		getUserById: jest.fn(),
 		createUser: jest.fn(),
@@ -35,6 +42,8 @@ jest.mock('../../src/models/userModel', () => {
 
 // Wir simulieren das '@prisma/client' Paket, um die Datenbankoperationen in unseren Tests zu kontrollieren.
 const {
+	signupUser: mockSignupUser,
+	loginUser: mockLoginUser,
 	getAllUsers: mockGetAllUsers,
 	getUserById: mockGetUserById,
 	createUser: mockCreateUser,
@@ -43,9 +52,11 @@ const {
 } = require('../../src/models/userModel');
 
 // Wir definieren unsere Routen.
+app.post('/auth/signup', signupUser);
+app.post('/auth/login', loginUser);
 app.get('/users', getAllUsers);
 app.get('/users/:userId', getUserById);
-app.post('/users', createUser);
+// app.post('/users', createUser);
 app.put('/users/:userId', updateUser);
 app.delete('/users/:userId', deleteUser);
 
@@ -128,71 +139,112 @@ describe('User Server Tests', () => {
 		});
 	});
 
-	// Test POST /users Endpoint:
-	describe('POST /users Endpoint Tests', () => {
-		// Benutzer erstellen:
-		it('soll einen neuen Benutzer erstellen', async () => {
-			// Wir simulieren die Funktion aus dem Model, die einen neuen Benutzer in der Datenbank erstellt.
-			mockCreateUser.mockResolvedValueOnce({
-				id: 1,
-				name: 'User1',
-				email: 'user1@example.com',
-			});
-			// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
-			const response = await request(app).post('/users').send({
-				name: 'User1',
-				email: 'user1@example.com',
-			});
-
-			// Wenn der Statuscode 409 ist, erwarten wir, dass die Fehlermeldung korrekt ist.
-			if (response.statusCode === 409) {
-				expect(response.body.message).toEqual(
-					'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen'
-				);
-			} else {
-				// Wir erwarten, dass der Statuscode 201 ist und der Benutzer korrekt ist.
-				expect(response.statusCode).toEqual(201);
-				expect(response.body.newUser).toEqual({
-					id: 1,
-					name: 'User1',
-					email: 'user1@example.com',
-				});
-			}
-		});
-
-		// ****** Dieser Test ist nicht mehr notwendig, da wir die Validierung in der Middleware durchführen *******
-
-		// Prüfen, ob alle Felder ausgefüllt sind:
-		// it('soll einen Fehler zurückgeben, wenn nicht alle Felder ausgefüllt sind', async () => {
-		// 	// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
-		// 	const response = await request(app).post('/users').send({
+	// Test POST /auth/signup Endpoint:
+	describe('POST /auth/signup Endpoint Tests', () => {
+		// ******** Dieser Test wird als Integration getestet ********
+		// Einen neuen Benutzer mit signupUser erstellen:
+		// it('soll einen neuen Benutzer erstellen', async () => {
+		// 	// Wir simulieren die Funktion aus dem Model, die einen neuen Benutzer in der Datenbank erstellt.
+		// 	mockSignupUser.mockResolvedValueOnce({
+		// 		id: 1,
 		// 		name: 'User1',
+		// 		email: 'user1@example.com',
+		// 		token: 'mockedToken',
 		// 	});
-
-		// 	// Wir erwarten, dass der Statuscode 400 ist und die Fehlermeldung korrekt ist.
-		// 	expect(response.statusCode).toEqual(400);
-		// 	expect(response.body.message).toEqual(
-		// 		'Bitte alle Felder ausfüllen'
-		// 	);
+		// 	// Wir senden eine POST-Anfrage an den '/auth/signup' Endpunkt, um einen neuen Benutzer zu erstellen.
+		// 	const response = await request(app).post('/auth/signup').send({
+		// 		name: 'User1',
+		// 		email: 'user1@example.com',
+		// 		password: 'user1',
+		// 	});
+		// 	// Wenn der Statuscode 409 ist, erwarten wir, dass die Fehlermeldung korrekt ist.
+		// 	if (response.statusCode === 409) {
+		// 		expect(response.body.message).toEqual(
+		// 			'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen'
+		// 		);
+		// 	}
+		// 	// Wir erwarten, dass der Statuscode 201 ist und der Benutzer korrekt ist.
+		// 	expect(response.statusCode).toEqual(201);
+		// 	expect(response.body).toEqual({
+		// 		message: 'Benutzer wurde erfolgreich erstellt',
+		// 		newUser: {
+		// 			id: 1,
+		// 			name: 'User1',
+		// 			email: 'user1@example.com',
+		// 		},
+		// 		token: 'mockedToken',
+		// 	});
 		// });
-
-		// Prüfen, ob ein Benutzer mit demselben Benutzernamen oder Email existiert:
-		it('soll einen Fehler zurückgeben, wenn ein Benutzer mit demselben Benutzernamen existiert', async () => {
-			// Wir simulieren die Funktion aus dem Model, die einen neuen Benutzer in der Datenbank erstellt.
-			mockCreateUser.mockResolvedValueOnce(null);
-			// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
-			const response = await request(app).post('/users').send({
-				name: 'User1',
-				email: 'user1@example.com',
-			});
-
-			// Wir erwarten, dass der Statuscode 409 ist und die Fehlermeldung korrekt ist.
-			expect(response.statusCode).toEqual(409);
-			expect(response.body.message).toEqual(
-				'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen'
-			);
-		});
 	});
+
+	// ****** Dieser Testblock wird durch den Testblock POST /auth/signup Endpoint Tests ersetzt *******
+
+	// Test POST /users Endpoint:
+	// describe('POST /users Endpoint Tests', () => {
+
+	// 	// Benutzer erstellen:
+	// 	it('soll einen neuen Benutzer erstellen', async () => {
+	// 		// Wir simulieren die Funktion aus dem Model, die einen neuen Benutzer in der Datenbank erstellt.
+	// 		mockCreateUser.mockResolvedValueOnce({
+	// 			id: 1,
+	// 			name: 'User1',
+	// 			email: 'user1@example.com',
+	// 		});
+	// 		// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
+	// 		const response = await request(app).post('/users').send({
+	// 			name: 'User1',
+	// 			email: 'user1@example.com',
+	// 		});
+
+	// 		// Wenn der Statuscode 409 ist, erwarten wir, dass die Fehlermeldung korrekt ist.
+	// 		if (response.statusCode === 409) {
+	// 			expect(response.body.message).toEqual(
+	// 				'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen'
+	// 			);
+	// 		} else {
+	// 			// Wir erwarten, dass der Statuscode 201 ist und der Benutzer korrekt ist.
+	// 			expect(response.statusCode).toEqual(201);
+	// 			expect(response.body.newUser).toEqual({
+	// 				id: 1,
+	// 				name: 'User1',
+	// 				email: 'user1@example.com',
+	// 			});
+	// 		}
+	// 	});
+
+	// 	// ****** Dieser Test ist nicht mehr notwendig, da wir die Validierung in der Middleware durchführen *******
+
+	// 	// Prüfen, ob alle Felder ausgefüllt sind:
+	// 	// it('soll einen Fehler zurückgeben, wenn nicht alle Felder ausgefüllt sind', async () => {
+	// 	// 	// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
+	// 	// 	const response = await request(app).post('/users').send({
+	// 	// 		name: 'User1',
+	// 	// 	});
+
+	// 	// 	// Wir erwarten, dass der Statuscode 400 ist und die Fehlermeldung korrekt ist.
+	// 	// 	expect(response.statusCode).toEqual(400);
+	// 	// 	expect(response.body.message).toEqual(
+	// 	// 		'Bitte alle Felder ausfüllen'
+	// 	// 	);
+	// 	// });
+
+	// 	// Prüfen, ob ein Benutzer mit demselben Benutzernamen oder Email existiert:
+	// 	it('soll einen Fehler zurückgeben, wenn ein Benutzer mit demselben Benutzernamen existiert', async () => {
+	// 		// Wir simulieren die Funktion aus dem Model, die einen neuen Benutzer in der Datenbank erstellt.
+	// 		mockCreateUser.mockResolvedValueOnce(null);
+	// 		// Wir senden eine POST-Anfrage an den '/users' Endpunkt, um einen neuen Benutzer zu erstellen.
+	// 		const response = await request(app).post('/users').send({
+	// 			name: 'User1',
+	// 			email: 'user1@example.com',
+	// 		});
+
+	// 		// Wir erwarten, dass der Statuscode 409 ist und die Fehlermeldung korrekt ist.
+	// 		expect(response.statusCode).toEqual(409);
+	// 		expect(response.body.message).toEqual(
+	// 			'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen'
+	// 		);
+	// 	});
+	// });
 
 	// Test PUT /users/:userId Endpoint:
 	describe('PUT /users/:userId Endpoint Tests', () => {
