@@ -2,9 +2,61 @@
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('DATABASE_URL:', process.env.DATABASE_URL);
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 // Import Prisma Client
 const { PrismaClient } = require('../../prisma/src/models/generated/client');
 const prisma = new PrismaClient();
+
+// ********** Auth **********
+
+exports.signup = async (name, email, password) => {
+	const existingUser = await prisma.user.findFirst({
+		where: {
+			OR: [{ name: name }, { email: email }],
+		},
+	});
+	if (existingUser) {
+		return null;
+	}
+
+	const salt = bcrypt.genSaltSync(10);
+	const hashedPassword = bcrypt.hashSync(password, salt);
+
+	const newUser = await prisma.user.create({
+		data: {
+			name,
+			email,
+			password: hashedPassword,
+			salt,
+		},
+	});
+
+	const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY);
+
+	return { user: newUser, token };
+};
+
+exports.login = async (email, password) => {
+	const user = await prisma.user.findFirst({
+		where: { email: email },
+	});
+	if (!user) {
+		return null;
+	}
+
+	const isPasswordValid = bcrypt.compareSync(password, user.password);
+	if (!isPasswordValid) {
+		return null;
+	}
+
+	const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+
+	return { user, token };
+};
+
+// ********** CRUD **********
 
 exports.getAllUsers = async () => {
 	return prisma.user.findMany();
