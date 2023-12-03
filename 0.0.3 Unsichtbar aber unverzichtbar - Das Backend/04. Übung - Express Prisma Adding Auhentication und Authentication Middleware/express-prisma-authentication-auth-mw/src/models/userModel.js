@@ -31,6 +31,13 @@ exports.signup = async (name, email, password) => {
 			password: hashedPassword,
 			salt,
 		},
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			// password und salt dürfen nicht zurückgegeben werden.
+			// Wir müssen das hier für unsere Integrations Test setzen
+		},
 	});
 
 	const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY);
@@ -59,7 +66,15 @@ exports.login = async (email, password) => {
 // ********** CRUD **********
 
 exports.getAllUsers = async () => {
-	return prisma.user.findMany();
+	return prisma.user.findMany({
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			// password und salt dürfen nicht zurückgegeben werden.
+			// Wir müssen das hier für unsere Integrations Test setzen
+		},
+	});
 };
 
 exports.getUserById = async (userId) => {
@@ -73,26 +88,36 @@ exports.getUserById = async (userId) => {
 		where: {
 			id: userId,
 		},
-	});
-};
-
-exports.createUser = async (name, email) => {
-	const existingUser = await prisma.user.findFirst({
-		where: {
-			OR: [{ name: name }, { email: email }],
-		},
-	});
-	if (existingUser) {
-		return null;
-	}
-
-	return prisma.user.create({
-		data: {
-			name,
-			email,
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			// password und salt dürfen nicht zurückgegeben werden.
+			// Wir müssen das hier für unsere Integrations Test setzen
 		},
 	});
 };
+
+// ***** Diese Funktion wurde durch die Funktion signup ersetzt. *****
+
+// exports.createUser = async (name, email) => {
+// 	const existingUser = await prisma.user.findFirst({
+// 		where: {
+// 			OR: [{ name: name }, { email: email }],
+// 		},
+// 	});
+// 	if (existingUser) {
+// 		return null;
+// 	}
+
+// 	return prisma.user.create({
+// 		data: {
+// 			name,
+// 			email,
+
+// 		},
+// 	});
+// };
 
 exports.updateUser = async (userId, newData) => {
 	const existingUser = await prisma.user.findFirst({
@@ -104,6 +129,13 @@ exports.updateUser = async (userId, newData) => {
 	return prisma.user.update({
 		where: { id: userId },
 		data: newData,
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			// password und salt dürfen nicht zurückgegeben werden.
+			// Wir müssen das hier für unsere Integrations Test setzen
+		},
 	});
 };
 
@@ -116,5 +148,12 @@ exports.deleteUser = async (userId) => {
 	}
 	return prisma.user.delete({
 		where: { id: userId },
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			// password und salt dürfen nicht zurückgegeben werden.
+			// Wir müssen das hier für unsere Integrations Test setzen
+		},
 	});
 };

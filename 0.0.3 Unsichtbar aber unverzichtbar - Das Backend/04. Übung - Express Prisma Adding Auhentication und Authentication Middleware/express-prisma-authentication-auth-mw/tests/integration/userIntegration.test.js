@@ -1,5 +1,8 @@
 const request = require('supertest');
 const { app, start } = require('../../index.js');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 // Importieren des Prisma-Clients
 const { PrismaClient } = require('../../prisma/src/models/generated/client');
@@ -48,21 +51,37 @@ describe('User Server Tests', () => {
 		// Alle Benutzer zurückgeben:
 		it('soll alle Benutzer zurückgeben', async () => {
 			// Erstelle 3 Benutzer
+			let users = [
+				{
+					name: 'User 1',
+					email: 'user1@example.com',
+					password: 'user1',
+				},
+				{
+					name: 'User 2',
+					email: 'user2@example.com',
+					password: 'user1',
+				},
+				{
+					name: 'User 3',
+					email: 'user3@example.com',
+					password: 'user3',
+				},
+			];
+			// Wir verschlüsseln die Passwörter, da wir in der Datenbank die Passwörter verschlüsselt speichern
+			// Dann verwenden wir Promise.all, um auf alle diese Promises zu warten, bevor wir fortfahren.
+			// Das resultierende users Array enthält die Benutzerobjekte mit den gehashten Passwörtern.
+			users = await Promise.all(
+				users.map(async (user) => {
+					const salt = await bcrypt.genSalt(saltRounds);
+					user.password = await bcrypt.hash(user.password, salt);
+					user.salt = salt;
+					return user;
+				})
+			);
+
 			await prisma.user.createMany({
-				data: [
-					{
-						name: 'User 1',
-						email: 'user1@example.com',
-					},
-					{
-						name: 'User 2',
-						email: 'user2@example.com',
-					},
-					{
-						name: 'User 3',
-						email: 'user3@example.com',
-					},
-				],
+				data: users,
 			});
 			// Wir senden den Request:
 			const res = await request(app).get('/users');
@@ -93,11 +112,18 @@ describe('User Server Tests', () => {
 		// Einen Benutzer zurückgeben:
 		it('soll einen Benutzer zurückgeben', async () => {
 			// Erstelle einen Benutzer
+			let user = {
+				name: 'User 1',
+				email: 'user1@example.com',
+				password: 'user1',
+			};
+
+			const salt = await bcrypt.genSalt(saltRounds);
+			user.password = await bcrypt.hash(user.password, salt);
+			user.salt = salt;
+
 			await prisma.user.create({
-				data: {
-					name: 'User 1',
-					email: 'user1@example.com',
-				},
+				data: user,
 			});
 			// Wir senden den Request:
 			const res = await request(app).get('/users/1');
@@ -126,23 +152,28 @@ describe('User Server Tests', () => {
 	});
 
 	describe('POST /users', () => {
-		// Einen neuen Benutzer erstellen:
-		it('soll einen neuen Benutzer erstellen', async () => {
-			const res = await request(app).post('/users').send({
-				name: 'User 1',
-				email: 'user1@example.com',
-			});
+		// ******** Dieser Test wird durch den Test SignUp ersetzt ********
 
-			expect(res.statusCode).toEqual(201);
-			expect(res.body).toEqual({
-				message: 'Benutzer wurde erfolgreich erstellt',
-				newUser: {
-					id: 1,
-					name: 'User 1',
-					email: 'user1@example.com',
-				},
-			});
-		});
+		// Einen neuen Benutzer erstellen:
+		// it('soll einen neuen Benutzer erstellen', async () => {
+		// 	const res = await request(app).post('/users').send({
+		// 		name: 'User 1',
+		// 		email: 'user1@example.com',
+		// 		password: 'user1',
+		// 	});
+
+		// 	expect(res.statusCode).toEqual(201);
+		// 	expect(res.body).toEqual({
+		// 		message: 'Benutzer wurde erfolgreich erstellt',
+		// 		newUser: {
+		// 			id: 1,
+		// 			name: 'User 1',
+		// 			email: 'user1@example.com',
+		// 			password: 'user1',
+		// 		},
+		// 	});
+		// });
+
 		// ****** Dieser Test ist nicht mehr notwendig, da wir die Validierung in der Middleware durchführen *******
 
 		// Einen neuen Benutzer erstellen, wenn ein Feld leer ist:
@@ -157,18 +188,46 @@ describe('User Server Tests', () => {
 		// 	});
 		// });
 
-		// Einen neuen Benutzer erstellen, wenn der Benutzername schon existiert:
-		it('soll einen Fehler zurückgeben, wenn der Benutzername schon existiert', async () => {
-			// Erstelle einen Benutzer
-			await prisma.user.create({
-				data: {
+		// Einen neuen Benutzer mit Signup erstellen:
+		it('soll einen neuen Benutzer mit Signup erstellen', async () => {
+			const res = await request(app).post('/auth/signup').send({
+				name: 'User 1',
+				email: 'user1@example.com',
+				password: 'user1',
+			});
+
+			expect(res.statusCode).toEqual(201);
+			expect(res.body).toEqual({
+				message: 'Benutzer wurde erfolgreich erstellt',
+				newUser: {
+					id: 1,
 					name: 'User 1',
 					email: 'user1@example.com',
 				},
+				token: expect.any(String), // Wir erwarten, dass ein Token als String zurückgegeben wird, kennen aber den genauen Wert nicht.
 			});
-			const res = await request(app).post('/users').send({
+		});
+
+		// Versuch einen neuen Benutzer erstellen, wenn der Benutzername schon existiert:
+		it('soll einen Fehler zurückgeben, wenn der Benutzername schon existiert', async () => {
+			// Erstelle einen Benutzer
+			let user = {
 				name: 'User 1',
 				email: 'user1@example.com',
+				password: 'user1',
+			};
+
+			const salt = await bcrypt.genSalt(saltRounds);
+			user.password = await bcrypt.hash(user.password, salt);
+			user.salt = salt;
+
+			await prisma.user.create({
+				data: user,
+			});
+			const res = await request(app).post('/auth/signup').send({
+				name: 'User 1',
+				email: 'user1@example.com',
+				password: 'user1',
 			});
 
 			expect(res.statusCode).toEqual(409);
@@ -183,15 +242,23 @@ describe('User Server Tests', () => {
 		// Einen Benutzer aktualisieren:
 		it('soll einen Benutzer aktualisieren', async () => {
 			// Erstelle einen Benutzer
+			let user = {
+				name: 'User 1',
+				email: 'user1@example.com',
+				password: 'user1',
+			};
+
+			const salt = await bcrypt.genSalt(saltRounds);
+			user.password = await bcrypt.hash(user.password, salt);
+			user.salt = salt;
+
 			await prisma.user.create({
-				data: {
-					name: 'User 1',
-					email: 'user1@example.com',
-				},
+				data: user,
 			});
 			const res = await request(app).put('/users/1').send({
 				name: 'User 2',
 				email: 'user2@example.com',
+				password: 'user2',
 			});
 
 			expect(res.statusCode).toEqual(200);
@@ -209,6 +276,7 @@ describe('User Server Tests', () => {
 			const res = await request(app).put('/users/2').send({
 				name: 'User 2',
 				email: 'user2@example.com',
+				password: 'user2',
 			});
 
 			expect(res.statusCode).toEqual(404);
@@ -222,11 +290,18 @@ describe('User Server Tests', () => {
 		// Einen Benutzer löschen:
 		it('soll einen Benutzer löschen', async () => {
 			// Erstelle einen Benutzer
+			let user = {
+				name: 'User 1',
+				email: 'user1@example.com',
+				password: 'user1',
+			};
+
+			const salt = await bcrypt.genSalt(saltRounds);
+			user.password = await bcrypt.hash(user.password, salt);
+			user.salt = salt;
+
 			await prisma.user.create({
-				data: {
-					name: 'User 1',
-					email: 'user1@example.com',
-				},
+				data: user,
 			});
 
 			const res = await request(app).delete('/users/1');

@@ -32,30 +32,32 @@ exports.getUserById = async (req, res) => {
 	}
 };
 
-exports.createUser = async (req, res) => {
-	try {
-		const { name, email } = req.body;
-		if (!name || !email) {
-			return res
-				.status(400)
-				.json({ message: 'Bitte alle Felder ausfüllen' });
-		}
-		const newUser = await createUser(name, email);
-		if (!newUser) {
-			return res.status(409).json({
-				message:
-					'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen',
-			});
-		}
-		res.status(201).json({
-			message: 'Benutzer wurde erfolgreich erstellt',
-			newUser,
-		});
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: 'Internal Server Error' });
-	}
-};
+// ***** Diese Funktion wurde durch die Funktion signup ersetzt. *****
+
+// exports.createUser = async (req, res) => {
+// 	try {
+// 		const { name, email } = req.body;
+// 		if (!name || !email) {
+// 			return res
+// 				.status(400)
+// 				.json({ message: 'Bitte alle Felder ausfüllen' });
+// 		}
+// 		const newUser = await createUser(name, email);
+// 		if (!newUser) {
+// 			return res.status(409).json({
+// 				message:
+// 					'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen',
+// 			});
+// 		}
+// 		res.status(201).json({
+// 			message: 'Benutzer wurde erfolgreich erstellt',
+// 			newUser,
+// 		});
+// 	} catch (error) {
+// 		console.error(error);
+// 		res.status(500).json({ message: 'Internal Server Error' });
+// 	}
+// };
 
 exports.updateUser = async (req, res) => {
 	try {
