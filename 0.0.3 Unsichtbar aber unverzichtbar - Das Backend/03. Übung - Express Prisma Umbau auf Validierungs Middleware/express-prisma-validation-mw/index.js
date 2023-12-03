@@ -8,7 +8,6 @@ let port = process.env.NODE_ENV !== 'testserver' ? 3000 : 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware um zu Validieren ob die Daten korrekt sind
 app.use('/users', userRoutes);
 
 function start(port) {
