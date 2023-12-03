@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/', getAllUsers);
 router.get('/:userId', getUserById);
-router.post('/', validateUser, createUser);
+// router.post('/', validateUser, createUser); // Diese Route wird durch die Route /auth/signup ersetzt.
 router.put('/:userId', validateUser, updateUser);
 router.delete('/:userId', deleteUser);
 

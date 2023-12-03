@@ -12,6 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 
+// Error Handler. Das ist gut, um eventuelle Fehler auslesen zu können die während der Request-Verarbeitung auftreten.
+app.use((error, req, res, next) => {
+	console.error(error.stack);
+	res.status(500).send('Something broke!');
+});
+
 function start(port) {
 	const server = app.listen(port, () => {
 		console.log(`Server is running on port ${port}---------`);
