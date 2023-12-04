@@ -47,6 +47,8 @@ describe('User Server Tests', () => {
 
 	// ******* IINTEGRATION TESTS USER *******
 
+	// ******+ ACHTUNG: Wenn ich it.only verwende, werden nur diese Tests ausgeführt. ******
+
 	// TODO: Tests für Login schreiben
 
 	describe('GET /users', () => {
@@ -163,7 +165,6 @@ describe('User Server Tests', () => {
 			});
 
 			expect(res.statusCode).toEqual(201);
-			console.log('Integration Test, res.body:', res.body);
 			expect(res.body).toEqual({
 				message: 'Benutzer wurde erfolgreich erstellt',
 				newUser: {
@@ -201,6 +202,41 @@ describe('User Server Tests', () => {
 			expect(res.body).toEqual({
 				message:
 					'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen',
+			});
+		});
+	});
+
+	describe('POST /auth/login', () => {
+		// Einen Benutzer mit Login einloggen:
+		it('soll einen Benutzer mit Login einloggen', async () => {
+			// Erstelle einen Benutzer
+			let user = {
+				name: 'User 1',
+				email: 'user1@example.com',
+				password: 'user1',
+			};
+
+			const salt = await bcrypt.genSalt(saltRounds);
+			user.password = await bcrypt.hash(user.password, salt);
+			user.salt = salt;
+
+			await prisma.user.create({
+				data: user,
+			});
+			const res = await request(app).post('/auth/login').send({
+				email: 'user1@example.com',
+				password: 'user1',
+			});
+			console.log('Integration Test, res.body:', res.body);
+			expect(res.statusCode).toEqual(200);
+			expect(res.body).toEqual({
+				message: 'Login erfolgreich',
+				user: {
+					id: 1,
+					name: 'User 1',
+					email: 'user1@example.com',
+				},
+				token: expect.any(String), // Wir können nicht genau vorhersagen, wie der Token aussieht, aber wir wissen, dass er ein String ist.
 			});
 		});
 	});

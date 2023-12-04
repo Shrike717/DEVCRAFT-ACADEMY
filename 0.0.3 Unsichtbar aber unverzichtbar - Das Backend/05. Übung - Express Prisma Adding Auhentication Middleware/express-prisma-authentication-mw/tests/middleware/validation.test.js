@@ -44,7 +44,7 @@ describe('User Server Tests', () => {
 
 	// ***** Test Middleware Validation für POST /auth/signup Route *****
 
-	describe('POST /users', () => {
+	describe('POST /auth/signup', () => {
 		// Es soll ein 400-Fehler zurückgegeben werden, wenn der Name weniger als 3 Zeichen hat
 		it('soll Error 400 zurückgeben, wenn der Name weniger als 3 Zeichen hat', async () => {
 			const res = await request(app)
@@ -64,5 +64,28 @@ describe('User Server Tests', () => {
 		});
 
 		// Weitere Tests für erfolgreiche Anforderungen können hier hinzugefügt werden
+	});
+
+	// ***** Test Middleware Validation für POST /auth/login Route *****
+
+	describe('POST /auth/login', () => {
+		// Es soll ein 400-Fehler zurückgegeben wird, wenn die E-Mail ungültig ist
+		it('soll Error 400 zurückgeben, wenn die E-Mail ungültig ist', async () => {
+			const res = await request(app)
+				.post('/auth/login')
+				.send({ email: 'nichtgültigeemail', password: 'test123' });
+			expect(res.statusCode).toEqual(400);
+			expect(res.body).toHaveProperty('errors');
+		});
+
+		// Es soll ein 400-Fehler zurückgegeben wird, wenn das Passwort weniger als 5 Zeichen hat
+		it('soll Error 400 zurückgeben, wenn das Passwort weniger als 5 Zeichen hat', async () => {
+			const res = await request(app)
+				.post('/auth/login')
+				.send({ email: 'user1@example.com', password: 'test' });
+
+			expect(res.statusCode).toEqual(400);
+			expect(res.body).toHaveProperty('errors');
+		});
 	});
 });

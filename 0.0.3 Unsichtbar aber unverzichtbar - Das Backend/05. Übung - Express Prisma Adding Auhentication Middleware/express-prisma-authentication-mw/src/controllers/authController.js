@@ -15,7 +15,7 @@ exports.signupUser = async (req, res) => {
 					'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen',
 			});
 		}
-		console.log('Kommt vom Model zurück zu Controller', newUser);
+
 		res.status(201).json({
 			message: 'Benutzer wurde erfolgreich erstellt',
 			newUser: {
@@ -45,8 +45,9 @@ exports.loginUser = async (req, res) => {
 				message: 'Ungültige Anmeldeinformationen',
 			});
 		}
+		console.log('Kommt vom Model zurück zu Controller', user);
 		res.json({
-			message: 'Erfolgreich angemeldet',
+			message: 'Login erfolgreich',
 			user: user.user,
 			token: user.token,
 		});

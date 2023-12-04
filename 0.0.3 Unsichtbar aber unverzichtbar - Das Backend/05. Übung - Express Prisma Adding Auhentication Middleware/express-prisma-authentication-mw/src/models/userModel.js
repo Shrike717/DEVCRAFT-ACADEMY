@@ -59,8 +59,8 @@ exports.loginUser = async (email, password) => {
 	}
 
 	const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
-
-	return { user, token };
+	console.log('Wird vom Model zurückgegeben: user', user);
+	return { user: { id: user.id, name: user.name, email: user.email }, token };
 };
 
 // ********** CRUD **********
