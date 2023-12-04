@@ -1,5 +1,5 @@
 const express = require('express');
-const { validateUser } = require('../../middleware/validation');
+const { validateUserSignup } = require('../../middleware/validation');
 
 const {
 	getAllUsers,
@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/', getAllUsers);
 router.get('/:userId', getUserById);
 // router.post('/', validateUser, createUser); // Diese Route wird durch die Route /auth/signup ersetzt.
-router.put('/:userId', validateUser, updateUser);
+router.put('/:userId', validateUserSignup, updateUser);
 router.delete('/:userId', deleteUser);
 
 module.exports = router;
