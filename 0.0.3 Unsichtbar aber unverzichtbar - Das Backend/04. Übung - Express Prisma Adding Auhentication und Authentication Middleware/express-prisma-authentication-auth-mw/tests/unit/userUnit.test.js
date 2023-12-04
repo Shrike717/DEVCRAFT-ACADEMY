@@ -139,45 +139,7 @@ describe('User Server Tests', () => {
 		});
 	});
 
-	// Test POST /auth/signup Endpoint:
-	describe('POST /auth/signup Endpoint Tests', () => {
-		// ******** Dieser Test wird als Integration getestet ********
-		// Einen neuen Benutzer mit signupUser erstellen:
-		// it('soll einen neuen Benutzer erstellen', async () => {
-		// 	// Wir simulieren die Funktion aus dem Model, die einen neuen Benutzer in der Datenbank erstellt.
-		// 	mockSignupUser.mockResolvedValueOnce({
-		// 		id: 1,
-		// 		name: 'User1',
-		// 		email: 'user1@example.com',
-		// 		token: 'mockedToken',
-		// 	});
-		// 	// Wir senden eine POST-Anfrage an den '/auth/signup' Endpunkt, um einen neuen Benutzer zu erstellen.
-		// 	const response = await request(app).post('/auth/signup').send({
-		// 		name: 'User1',
-		// 		email: 'user1@example.com',
-		// 		password: 'user1',
-		// 	});
-		// 	// Wenn der Statuscode 409 ist, erwarten wir, dass die Fehlermeldung korrekt ist.
-		// 	if (response.statusCode === 409) {
-		// 		expect(response.body.message).toEqual(
-		// 			'Es existiert bereits ein Benutzer mit dieser E-Mail oder diesem Benutzernamen'
-		// 		);
-		// 	}
-		// 	// Wir erwarten, dass der Statuscode 201 ist und der Benutzer korrekt ist.
-		// 	expect(response.statusCode).toEqual(201);
-		// 	expect(response.body).toEqual({
-		// 		message: 'Benutzer wurde erfolgreich erstellt',
-		// 		newUser: {
-		// 			id: 1,
-		// 			name: 'User1',
-		// 			email: 'user1@example.com',
-		// 		},
-		// 		token: 'mockedToken',
-		// 	});
-		// });
-	});
-
-	// ****** Dieser Testblock wird durch den Testblock POST /auth/signup Endpoint Tests ersetzt *******
+	// ****** Dieser Testblock wird durch einen Integration Test zu POST /auth/signup ersetzt *******
 
 	// Test POST /users Endpoint:
 	// describe('POST /users Endpoint Tests', () => {

@@ -47,6 +47,8 @@ describe('User Server Tests', () => {
 
 	// ******* IINTEGRATION TESTS USER *******
 
+	// TODO: Tests für Login schreiben
+
 	describe('GET /users', () => {
 		// Alle Benutzer zurückgeben:
 		it('soll alle Benutzer zurückgeben', async () => {
@@ -151,45 +153,7 @@ describe('User Server Tests', () => {
 		});
 	});
 
-	describe('POST /users', () => {
-		// TODO: Den alten Test Blog für POST/users wiederherstellen und auskommentieren
-		// TODO: Tests für Login schreiben
-		// ******** Dieser Test wird durch den Test SignUp ersetzt ********
-
-		// Einen neuen Benutzer erstellen:
-		// it('soll einen neuen Benutzer erstellen', async () => {
-		// 	const res = await request(app).post('/users').send({
-		// 		name: 'User 1',
-		// 		email: 'user1@example.com',
-		// 		password: 'user1',
-		// 	});
-
-		// 	expect(res.statusCode).toEqual(201);
-		// 	expect(res.body).toEqual({
-		// 		message: 'Benutzer wurde erfolgreich erstellt',
-		// 		newUser: {
-		// 			id: 1,
-		// 			name: 'User 1',
-		// 			email: 'user1@example.com',
-		// 			password: 'user1',
-		// 		},
-		// 	});
-		// });
-
-		// ****** Dieser Test ist nicht mehr notwendig, da wir die Validierung in der Middleware durchführen *******
-
-		// Einen neuen Benutzer erstellen, wenn ein Feld leer ist:
-		// it('soll einen Fehler zurückgeben, wenn ein Feld fehlt', async () => {
-		// 	const res = await request(app).post('/users').send({
-		// 		name: 'User 1',
-		// 	});
-
-		// 	expect(res.statusCode).toEqual(400);
-		// 	expect(res.body).toEqual({
-		// 		message: 'Bitte alle Felder ausfüllen',
-		// 	});
-		// });
-
+	describe('POST /auth/signup', () => {
 		// Einen neuen Benutzer mit Signup erstellen:
 		it('soll einen neuen Benutzer mit Signup erstellen', async () => {
 			const res = await request(app).post('/auth/signup').send({
