@@ -1,0 +1,98 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+#run-name:  ${{ github.actor }} pushed code PushNo ${{ github.run_number}}
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+      - bugfix/*
+  pull_request:
+    branches:
+      - main
+      - feature/*
+      - bugfix/*
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 16.x, 18.x,20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm install --prefix recipe-frontend/
+
+    - name: Run FrontEndLint
+      run: npm run lint --prefix recipe-frontend/
+
+  jest:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+
+    strategy:
+      matrix:
+        node-version: [ 16.x, 18.x, 20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm install --prefix recipe-backend/
+
+    - name: Install Prisma CLI
+      run: npm install prisma --save-dev
+
+    - name: Install NC
+      run: sudo apt-get install -y netcat  
+
+    - name: Wait for PostgreSQL to start
+      run: |
+        for i in {1..10}; do
+          nc -z localhost 5432 && echo Success && exit 0
+          echo -n .
+          sleep 1
+        done
+        echo Failed waiting for Postgres && exit 1
+
+    - name: Run Prisma Migrate
+      env: 
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+      run: npx prisma migrate dev --name init --preview-feature --schema recipe-backend/prisma/schema.prisma
+
+    - name: Run BackendJest
+      run: npm run test --prefix recipe-backend/
+
+
