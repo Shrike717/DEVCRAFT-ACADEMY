@@ -11,7 +11,7 @@ const NavBar = async () => {
 	console.log('[Navbar] session: ', session);
 	if (session) {
 		return (
-			<nav className='flex flex-row justify-between h-[60px] w-1/2 mb-32 items-center'>
+			<nav className='flex flex-row justify-between h-[60px] w-1/2 mb-32 items-center bg-slate-50 px-4'>
 				<Link href={'/'}>Home</Link>
 				<div className={'flex flex-row gap-8 items-center'}>
 					<div className='flex flex-row gap-2 justify-center items-center'>
@@ -30,7 +30,7 @@ const NavBar = async () => {
 		);
 	}
 	return (
-		<nav className='flex flex-row justify-between h-[60px] w-1/2 mb-32 items-center'>
+		<nav className='flex flex-row justify-between h-[60px] w-1/2 mb-32 items-center bg-slate-50 px-4'>
 			<Link href={'/'}>Home</Link>
 			<div className={'flex flex-row gap-8 items-center'}>
 				<Link href={'/signup'}>SignUp</Link>
