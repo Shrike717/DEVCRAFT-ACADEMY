@@ -1,9 +1,13 @@
+'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 function LoginForm() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const router = useRouter();
 
 	// console.log(name, email, password, confirmPassword);
 
@@ -30,16 +34,6 @@ function LoginForm() {
 		>
 			<div className='flex flex-col gap-2'>
 				<label className='flex flex-col'>
-					Name:
-					<input
-						type='text'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-						placeholder='Your Name:'
-						required
-					/>
-				</label>
-				<label className='flex flex-col'>
 					Email:
 					<input
 						type='email'
@@ -56,7 +50,7 @@ function LoginForm() {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						placeholder='Your Password:'
-						required
+						// required
 					/>
 				</label>
 				<button
@@ -65,6 +59,21 @@ function LoginForm() {
 				>
 					Log In
 				</button>
+				<div className='mx-auto my-1 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400'>
+					or
+				</div>
+				<div className='flex flex-col text-center'>
+					<button
+						className='group underline rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
+						onClick={async () =>
+							await signIn('github', {
+								callbackUrl: 'http://localhost:3000',
+							})
+						}
+					>
+						Sign in with Github
+					</button>
+				</div>
 			</div>
 		</form>
 	);

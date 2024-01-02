@@ -33,7 +33,6 @@ export default function Recipes() {
 		//   method: "POST",
 		//   body: JSON.stringify(data),
 		// }).then((response) => loadData());
-
 		// Comment the following line to enable API access
 		// setRecipes((currentRecipes) => [...currentRecipes, data]);
 	};
