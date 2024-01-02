@@ -1,0 +1,41 @@
+{
+	"name": "backendjs",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/app.js",
+	"scripts": {
+		"start": "cross-env NODE_ENV=dev nodemon app.js",
+		"test": "cross-env NODE_ENV=test jest",
+		"test:authController": "cross-env NODE_ENV=test jest src/controllers/authController.js --detectOpenHandles",
+		"test:ModelMockedAll": "jest src/models/userModelMockedAll.test.js",
+		"test:ModelMockedController": "export NODE_ENV=testserver && dotenv -e .env.test -- jest --detectOpenHandles src/models/userModelMockedController.test.js",
+		"test:integration-windows": "dotenv -e .env.test -- jest --detectOpenHandles __tests__/integration.test.js",
+		"test:integration": "export NODE_ENV=testserver && dotenv -e .env.test -- jest --detectOpenHandles __tests__/integration.test.js",
+		"see-dev-db": "dotenv -e .env.dev -- npx prisma studio",
+		"see-test-db": "dotenv -e .env.test -- npx prisma studio",
+		"drop-test-db": "dotenv -e .env.test -- ./reset_db-test.sh",
+		"drop-test-db-windows": "dotenv -e .env.test -- powershell ./reset_db-test.ps1",
+		"migrate-test-db": "dotenv -e .env.test -- npx prisma migrate dev",
+		"migrate-dev-db": "dotenv -e .env.dev -- npx prisma migrate dev"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.3",
+		"jest": "^29.7.0",
+		"nodemon": "^3.0.2",
+		"prisma": "^5.7.0",
+		"supertest": "^6.3.3"
+	},
+	"dependencies": {
+		"@jest/globals": "^29.7.0",
+		"@prisma/client": "^5.7.0",
+		"bcrypt": "^5.1.1",
+		"dotenv": "^16.3.1",
+		"dotenv-cli": "^7.3.0",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.2"
+	}
+}
