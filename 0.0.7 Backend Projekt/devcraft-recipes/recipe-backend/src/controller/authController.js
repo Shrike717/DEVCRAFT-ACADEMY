@@ -14,12 +14,7 @@ exports.signupUser = async (req, res) => {
 		}
 
 		// Erstelle einen neuen Benutzer
-		const newUser = await signupUserModel(
-			name,
-			email,
-			password
-			// loginMethod
-		);
+		const newUser = await signupUserModel(name, email, password);
 
 		// Wenn der Benutzer nicht erstellt wurde (weil die E-Mail bereits existiert)
 		if (!newUser) {

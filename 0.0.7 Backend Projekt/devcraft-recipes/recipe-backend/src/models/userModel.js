@@ -8,38 +8,7 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-signupUserModel = async (name, email, password, loginMethod) => {
-	// // Wenn die loginMethod github ist, schreibe den Benutzer in die githubUser Tabelle
-	// const isGithubUser = loginMethod === 'github';
-
-	// if (isGithubUser) {
-	//     const existingUser = await prisma.userGithub.findFirst({
-	//         where: {
-	//             OR: [{name: name}, {email: email}],
-	//         },
-	//     });
-	//     if (existingUser) {
-	//         return {
-	//             data: {
-	//                 name: existingUser.name,
-	//                 email: existingUser.email,
-	//                 loginMethod: 'github',
-	//             },
-	//         };
-	//     } else {
-	//         // Hashe das Passwort, bevor es in der Datenbank gespeichert wird
-	//         const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-	//         return prisma.userGithub.create({
-	//             data: {
-	//                 name,
-	//                 email,
-	//                 password: hashedPassword,
-	//             },
-	//         });
-	//     }
-	// }
-
+signupUserModel = async (name, email, password) => {
 	const existingUser = await prisma.user.findFirst({
 		where: {
 			OR: [{ name: name }, { email: email }],
