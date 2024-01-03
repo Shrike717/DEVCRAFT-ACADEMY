@@ -1,5 +1,7 @@
+'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 function SignupForm() {
 	const [name, setName] = useState('');
@@ -7,6 +9,8 @@ function SignupForm() {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	// console.log(name, email, password, confirmPassword);
+
+	const router = useRouter();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -16,18 +20,23 @@ function SignupForm() {
 			console.log('Passwords do not match');
 			return;
 		}
-
-		const response = await axios.post('http://localhost:5000/auth/signup', {
+		// Die Custom Credentials werden zum Post Route Handler des Users geschickt. Von dort erfolgt der Fetch Call zum Express Server
+		const response = await axios.post('/api/user', {
 			name: name,
 			email: email,
 			password: password,
 		});
-		console.log('[SignupForm] handleSubmit response: ', response);
+		console.log('[SignupForm] handleSubmit response.data: ', response.data);
 
-		if (response.data.success) {
+		if (response.data.status === 201) {
 			// Weiterleiten zum Dashboard oder einer anderen Seite
+			router.push('/login');
 		} else {
 			// Fehlermeldung anzeigen
+			console.log(
+				'[SignupForm] handleSubmit response.data: ',
+				response.data
+			);
 		}
 	};
 
@@ -44,7 +53,7 @@ function SignupForm() {
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 						placeholder='Your Name:'
-						required
+						// required
 					/>
 				</label>
 				<label className='flex flex-col'>
@@ -64,7 +73,7 @@ function SignupForm() {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						placeholder='Your Password:'
-						required
+						// required
 					/>
 				</label>
 				<label className='flex flex-col'>
@@ -74,7 +83,7 @@ function SignupForm() {
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						placeholder='Confirm Password:'
-						required
+						// required
 					/>
 				</label>
 				<button
