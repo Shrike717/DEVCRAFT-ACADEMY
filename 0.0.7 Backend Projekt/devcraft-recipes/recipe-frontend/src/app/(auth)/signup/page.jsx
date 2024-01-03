@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import Login from '../../components/Login';
-import { setSession } from '../../utils/api';
+import Login from '../../../components/Login';
+import { setSession } from '../../../utils/api';
 
 function SignupForm() {
 	const [name, setName] = useState('');
