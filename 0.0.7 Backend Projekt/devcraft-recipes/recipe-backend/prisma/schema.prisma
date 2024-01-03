@@ -10,19 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserLocal {
+model User {
   id       Int      @id @default(autoincrement())
   name     String
   email    String
   password String
   recipes  Recipe[]
-}
-
-model UserGithub {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String
-  password String
 }
 
 model Recipe {
@@ -35,7 +28,7 @@ model Recipe {
   updatedAt   DateTime @updatedAt
 
   userId      Int
-  user        UserLocal    @relation(fields: [userId], references: [id])
+  user        User    @relation(fields: [userId], references: [id])
   Ingredients Ingredient[]
 }
 
