@@ -34,7 +34,11 @@ exports.signupUser = async (req, res) => {
 		res.status(201).json({
 			message: 'User wurde erfolgreich erstellt!',
 			token: token,
-			newUser: { name: newUser.name, email: newUser.email },
+			newUser: {
+				id: newUser.id,
+				name: newUser.name,
+				email: newUser.email,
+			},
 		});
 	} catch (error) {
 		console.error(error);
@@ -78,7 +82,7 @@ exports.loginUser = async (req, res) => {
 		res.status(200).json({
 			message: 'User wurde erfolgreich eingeloggt!',
 			token: token,
-			user: { name: user.name, email: user.email },
+			user: { id: user.id, name: user.name, email: user.email },
 		});
 	} catch (error) {
 		console.error(error);

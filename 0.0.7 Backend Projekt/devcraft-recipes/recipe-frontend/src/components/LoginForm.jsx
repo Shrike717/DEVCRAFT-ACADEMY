@@ -1,31 +1,41 @@
 'use client';
-import { useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 function LoginForm() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const router = useRouter();
+	const { data: session } = useSession();
+	// console.log('[LoginForm] session: ', session);
 
 	// console.log(name, email, password, confirmPassword);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const response = await axios.post('http://localhost:5000/auth/login', {
-			name: name,
+		// Hier schicken wir die Custom Credentials an den Credentials Provider:
+		const signInData = await signIn('credentials', {
+			redirect: false,
+			email: email,
 			password: password,
 		});
-		console.log('[SignupForm] handleSubmit response: ', response);
 
-		if (response.data.success) {
-			// Weiterleiten zum Dashboard oder einer anderen Seite
+		if (signInData?.error) {
+			console.error(signInData.error);
 		} else {
-			// Fehlermeldung anzeigen
+			router.refresh(); // Refresh der Hmepage:
+			router.push('/'); // Weiterleitung auf die Homepage:
 		}
 	};
+
+	useEffect(() => {
+		if (session) {
+			router.push('/');
+		}
+	}, [session]);
 
 	return (
 		<form
@@ -66,8 +76,9 @@ function LoginForm() {
 					<button
 						className='group underline rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
 						onClick={async () =>
+							// Hier schicken wir die Github Credentials an den Github Provider:
 							await signIn('github', {
-								callbackUrl: 'http://localhost:3000',
+								// callbackUrl: 'http://localhost:3000/', // Hier wird die Weiterleitungs-URL angegeben. Homepage
 							})
 						}
 					>

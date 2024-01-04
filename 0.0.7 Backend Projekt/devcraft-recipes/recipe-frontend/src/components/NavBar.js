@@ -1,4 +1,10 @@
-// 'use client';
+// Der useSession Hook ist speziell für den Einsatz auf der Client-Seite konzipiert und sollte nicht auf der Server-Seite verwendet werden.
+// Sie verwendet React's Context API, um die Session-Daten über die Komponenten Ihrer Anwendung hinweg verfügbar zu machen.
+
+// Wenn Sie die Session-Daten auf der Server-Seite abrufen möchten, können Sie die getSession Funktion von next-auth verwenden.
+// Diese Funktion kann sowohl auf der Client- als auch auf der Server-Seite verwendet werden.
+// Sie könnten sie in getServerSideProps oder getInitialProps in Ihrer Seite verwenden, um die Session-Daten abzurufen und sie dann als Prop an Ihre NavBar Komponente weiterzugeben.
+
 import Link from 'next/link';
 import LogoutButton from './LogoutButton';
 import { getServerSession } from 'next-auth';
@@ -15,14 +21,20 @@ const NavBar = async () => {
 				<Link href={'/'}>Home</Link>
 				<div className={'flex flex-row gap-8 items-center'}>
 					<div className='flex flex-row gap-2 justify-center items-center'>
-						<Image
-							className={'w-[30px] h-[30px] rounded-[50%] '}
-							alt={'Profilbild'}
-							src={session.user.image}
-							width={30}
-							height={30}
-						/>
-						<span>{session.user.name}</span>
+						{session.user && session.user.image ? (
+							<Image
+								className={'w-[30px] h-[30px] rounded-[50%] '}
+								alt={'Profilbild'}
+								src={session.user.image}
+								width={30}
+								height={30}
+							/>
+						) : (
+							<span className={'text-xl font-bold'}>
+								{session.user && session.user.name[0]}
+							</span>
+						)}
+						<span>{session.user && session.user.name}</span>
 					</div>
 					<LogoutButton />
 				</div>
