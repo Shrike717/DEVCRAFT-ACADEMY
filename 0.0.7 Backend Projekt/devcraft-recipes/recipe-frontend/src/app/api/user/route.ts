@@ -5,7 +5,7 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
-// Diese Funktion sendet eine POST-Anfrage an den Authentifizierungsserver
+// Diese Funktion sendet eine POST-Anfrage an den Express Backend Server, um einen neuen Benutzer zu erstellen.
 export async function POST(req: Request) {
 	try {
 		// Der Request-Body wird in ein JSON-Objekt umgewandelt
