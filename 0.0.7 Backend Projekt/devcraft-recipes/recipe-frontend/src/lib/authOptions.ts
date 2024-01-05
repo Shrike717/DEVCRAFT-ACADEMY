@@ -41,10 +41,10 @@ export const authOptions: NextAuthOptions = {
 					}
 				);
 
-				// console.log(
-				// 	'[CredentialsProvider] response.data: ',
-				// 	response.data
-				// );
+				console.log(
+					'[CredentialsProvider] response.data: ',
+					response.data
+				);
 
 				// Extract user data from response
 				const userData = response.data.user;
@@ -57,7 +57,7 @@ export const authOptions: NextAuthOptions = {
 					// token: response.data.token, // Extract token from response.data
 				};
 
-				// console.log('[Authorize] user:', user);
+				console.log('[Authorize] user:', user);
 
 				// Return user object
 				return user;
@@ -72,6 +72,7 @@ export const authOptions: NextAuthOptions = {
 			if (user) {
 				return {
 					...token,
+					id: user.id,
 					name: user.name,
 					email: user.email,
 				};
@@ -87,6 +88,7 @@ export const authOptions: NextAuthOptions = {
 				...session,
 				user: {
 					...session.user,
+					id: token.id,
 					name: token.name,
 					email: token.email,
 				},
