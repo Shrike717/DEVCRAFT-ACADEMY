@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { setSession } from '../lib/api';
+import { getSession } from 'next-auth/react'; // Holt die Session nach dem anmelden.
 
 function LoginForm() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const router = useRouter();
 	const { data: session } = useSession();
-	// console.log('[LoginForm] session: ', session);
+	console.log('[LoginForm] session: ', session);
 
 	// console.log(name, email, password, confirmPassword);
 
@@ -26,6 +28,13 @@ function LoginForm() {
 		if (signInData?.error) {
 			console.error(signInData.error);
 		} else {
+			// Hier holen wir die aktuelle Session nach dem Anmelden:
+			const currentSession = await getSession();
+			if (currentSession && currentSession.user) {
+				// Und schicken den User und den Express Token in den Local Storage:
+				setSession(currentSession.user);
+			}
+
 			router.refresh(); // Refresh der Hmepage:
 			router.push('/'); // Weiterleitung auf die Homepage:
 		}
