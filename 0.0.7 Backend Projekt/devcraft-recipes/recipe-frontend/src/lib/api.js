@@ -2,9 +2,23 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 // Funktion, die ein User Objekts in den Local Storage und einen Token als Cookie setzt:
-export const setSession = (user, token) => {
+export const setSession = (session) => {
+	if (!session) {
+		throw new Error('Session is not defined');
+	}
+	console.log('[setSession] session:', session);
 	try {
-		localStorage.setItem('user', JSON.stringify(user));
+		const currentUser = {
+			id: session.id,
+			name: session.name,
+			email: session.email,
+		};
+		const token = session.tokenExpress;
+
+		console.log('[setSession] currentUser:', currentUser);
+		console.log('[setSession] token:', token);
+
+		localStorage.setItem('user', JSON.stringify({ currentUser }));
 		Cookies.set('token', token, { expires: 1 });
 	} catch (error) {
 		console.error('Error setting session:', error);
