@@ -22,11 +22,11 @@ export default function Recipes() {
 			steps: ['Smush bananas', '2. Eat bread'],
 		},
 	]);
-	const loadData = () => {
-		fetch(`${api}/recipes`)
-			.then((response) => response.json())
-			.then((data) => setRecipes(data));
-	};
+	// const loadData = () => {
+	// 	fetch(`${api}/recipes`)
+	// 		.then((response) => response.json())
+	// 		.then((data) => setRecipes(data));
+	// };
 	let saveData = (data) => {
 		// Uncomment this to activate API access:
 		// fetch(`${api}/recipes`, {
