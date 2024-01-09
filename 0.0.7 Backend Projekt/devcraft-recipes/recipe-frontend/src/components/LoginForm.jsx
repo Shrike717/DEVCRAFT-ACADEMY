@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { setSession } from '../lib/api';
 import { getSession } from 'next-auth/react'; // Holt die Session nach dem anmelden.
+import axios from 'axios';
 
 function LoginForm() {
 	const [email, setEmail] = useState('');
@@ -17,6 +18,10 @@ function LoginForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		// Test Request to backend to check if the cookie is set:
+		// const response = await axios.get('http://localhost:5000/set-cookie');
+		// console.log('[LoinForm] response.headers: ', response.headers);
 
 		// Hier schicken wir die Custom Credentials an den Credentials Provider:
 		const signInData = await signIn('credentials', {
