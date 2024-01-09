@@ -2,6 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
+import { LOGIN } from '../app/api/user/route'; // Pfad zur LOGIN Funktion
 
 export const authOptions: NextAuthOptions = {
 	session: {
@@ -38,6 +39,9 @@ export const authOptions: NextAuthOptions = {
 					{
 						email: credentials.email,
 						password: credentials.password,
+					},
+					{
+						withCredentials: true, // Weil ich hier kein Cookie mitgebe, muss ich das hier explizit setzen. Sonst wird später der Token nicht als Cookie gesetzt.
 					}
 				);
 
@@ -54,7 +58,7 @@ export const authOptions: NextAuthOptions = {
 					id: userData.id + '', // Sets id to string
 					email: userData.email,
 					name: userData.name,
-					tokenExpress: response.data.token, // Extract token from response.data
+					// tokenExpress: response.data.token, // Extract token from response.data
 				};
 
 				// console.log('[Authorize] user:', user);
@@ -63,6 +67,65 @@ export const authOptions: NextAuthOptions = {
 				return user;
 			},
 		}),
+
+		// CredentialsProvider({
+		// 	name: 'Credentials',
+		// 	credentials: {
+		// 		email: {
+		// 			label: 'Email',
+		// 			type: 'email',
+		// 			placeholder: 'Your email',
+		// 		},
+		// 		password: { label: 'Password', type: 'password' },
+		// 	},
+		// 	async authorize(credentials, req) {
+		// 		if (!credentials.email || !credentials.password) {
+		// 			return null;
+		// 		}
+
+		// 		// Erstellen eines neues Request-Objekt mit den Anmeldedaten im Body
+		// 		const loginRequest = new Request(
+		// 			'http://localhost:5000/auth/login',
+		// 			{
+		// 				method: 'POST',
+		// 				body: JSON.stringify(credentials),
+		// 				headers: {
+		// 					'Content-Type': 'application/json',
+		// 				},
+		// 			}
+		// 		);
+
+		// 		// Rufen Sie die LOGIN Funktion auf und übergeben Sie die Anfrage
+		// 		const response = await LOGIN(loginRequest, null);
+
+		// 		console.log('[CredentialsProvider] response: ', response);
+
+		// 		// Überprüfen Sie, ob eine Antwort erhalten wurde
+		// 		if (!response) {
+		// 			// Wenn keine Antwort erhalten wurde, geben Sie null zurück
+		// 			return null;
+		// 		}
+
+		// 		// Überprüfen Sie, ob die Anmeldung erfolgreich war
+		// 		if (response.status === 200) {
+		// 			// Extrahieren Sie die Benutzerdaten aus der Antwort
+		// 			const userData = response.data.user;
+
+		// 			// Bereiten Sie das Benutzerobjekt vor
+		// 			const user = {
+		// 				id: userData.id + '', // Setzt id zu String
+		// 				email: userData.email,
+		// 				name: userData.name,
+		// 			};
+
+		// 			// Geben Sie das Benutzerobjekt zurück
+		// 			return user;
+		// 		} else {
+		// 			// Wenn die Anmeldung fehlgeschlagen ist, geben Sie null zurück
+		// 			return null;
+		// 		}
+		// 	},
+		// }),
 	],
 	callbacks: {
 		async jwt({ token, user }) {
@@ -75,7 +138,7 @@ export const authOptions: NextAuthOptions = {
 					id: user.id,
 					name: user.name,
 					email: user.email,
-					tokenExpress: user.tokenExpress,
+					// tokenExpress: user.tokenExpress,
 				};
 			}
 			// console.log('[Ende Callback jwt] token after processing:', token);
@@ -92,7 +155,7 @@ export const authOptions: NextAuthOptions = {
 					id: token.id,
 					name: token.name,
 					email: token.email,
-					tokenExpress: token.tokenExpress,
+					// tokenExpress: token.tokenExpress,
 				},
 			};
 		},

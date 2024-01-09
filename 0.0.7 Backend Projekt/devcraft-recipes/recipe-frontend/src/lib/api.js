@@ -13,13 +13,13 @@ export const setSession = (session) => {
 			name: session.name,
 			email: session.email,
 		};
-		const token = session.tokenExpress;
+		// const token = session.tokenExpress;
 
 		console.log('[setSession] currentUser:', currentUser);
-		console.log('[setSession] token:', token);
+		// console.log('[setSession] token:', token);
 
 		localStorage.setItem('user', JSON.stringify({ currentUser }));
-		Cookies.set('token', token, { expires: 1 });
+		// Cookies.set('token', token, { expires: 1 });
 	} catch (error) {
 		console.error('Error setting session:', error);
 	}
