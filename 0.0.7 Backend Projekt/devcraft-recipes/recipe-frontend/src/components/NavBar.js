@@ -17,9 +17,9 @@ const NavBar = async () => {
 	console.log('[Navbar] session: ', session);
 	if (session) {
 		return (
-			<nav className='flex flex-row justify-between h-[60px] w-2/3 mb-8 items-center bg-slate-50 px-4 shadow-sm'>
+			<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
 				<Link href={'/'}>Home</Link>
-				<div className={'flex flex-row gap-8 items-center'}>
+				<div className={'flex flex-row gap-2 md:gap-8 items-center'}>
 					<div className='flex flex-row gap-2 justify-center items-center'>
 						{session.user && session.user.image ? (
 							<Image
@@ -34,7 +34,9 @@ const NavBar = async () => {
 								{session.user && session.user.name[0]}
 							</span>
 						)}
-						<span>{session.user && session.user.name}</span>
+						<span className={'sm:block hidden'}>
+							{session.user && session.user.name}
+						</span>
 					</div>
 					<LogoutButton />
 				</div>
@@ -42,9 +44,9 @@ const NavBar = async () => {
 		);
 	}
 	return (
-		<nav className='flex flex-row justify-between h-[60px] w-2/3 mb-8 items-center bg-slate-50 px-4 shadow-sm'>
+		<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
 			<Link href={'/'}>Home</Link>
-			<div className={'flex flex-row gap-8 items-center'}>
+			<div className={'flex flex-row gap-2 md:gap-8 items-center'}>
 				<Link href={'/signup'}>SignUp</Link>
 				<Link href={'/login'}>LogIn</Link>
 			</div>
