@@ -35,10 +35,7 @@ loginUserModel = async (email, password) => {
 	const user = await prisma.user.findFirst({
 		where: { email: email },
 	});
-	console.log(
-		'[loginUserModel] user after prisma.UserLocal.findFirst: ',
-		user
-	);
+	console.log('[loginUserModel] user after prisma.User.findFirst: ', user);
 	if (!user) {
 		return null;
 	}

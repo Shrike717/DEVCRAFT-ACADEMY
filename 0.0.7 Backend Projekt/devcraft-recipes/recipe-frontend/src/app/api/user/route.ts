@@ -53,14 +53,14 @@ export async function POST(req: Request, res: Response) {
 			}
 		);
 
-		console.log(
-			'[User Post Handler] response.data.newUser: ',
-			response.data.newUser
-		);
+		// console.log(
+		// 	'[User Post Handler] response.data.newUser: ',
+		// 	response.data.newUser
+		// );
 
 		// Extrahieren Sie den Set-Cookie-Header aus der Antwort
 		const setCookieHeader = response.headers['set-cookie'];
-		console.log('[User Post Handler] setCookieHeader: ', setCookieHeader);
+		// console.log('[User Post Handler] setCookieHeader: ', setCookieHeader);
 
 		// Wenn der Statuscode der Antwort 201 ist, wird angenommen, dass die Anfrage erfolgreich war
 		// und eine Antwort mit den Benutzerdaten, der Nachricht und dem Statuscode der Serverantwort wird zurückgegeben
@@ -83,11 +83,11 @@ export async function POST(req: Request, res: Response) {
 		}
 	} catch (error) {
 		// Wenn bei der Anfrage ein Fehler auftritt, wird dieser Fehler abgefangen
-		console.log(error);
+		// console.log(error);
 		if (error.response) {
 			// Wenn der Fehler eine Antwort vom Server enthält, wird angenommen, dass der Server mit einem Fehlerstatuscode geantwortet hat
 			// und eine Antwort mit dem Statuscode und der Nachricht der Serverantwort wird zurückgegeben
-			return NextApiResponse.json({
+			return NextResponse.json({
 				user: null,
 				message: error.response.data.message,
 				status: error.response.status,
@@ -95,7 +95,7 @@ export async function POST(req: Request, res: Response) {
 		} else {
 			// Wenn der Fehler keine Antwort vom Server enthält, wird angenommen, dass beim Einrichten der Anfrage ein Fehler aufgetreten ist
 			// und eine allgemeine Fehlerantwort wird zurückgegeben
-			return NextApiResponse.json({
+			return NextResponse.json({
 				user: null,
 				message: 'Etwas ist schief gelaufen',
 				status: 500,

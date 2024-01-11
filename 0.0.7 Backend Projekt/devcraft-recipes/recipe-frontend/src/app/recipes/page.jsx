@@ -1,6 +1,6 @@
 'use client';
 import RecipeForm from '../../components/RecipeForm';
-import { api } from '../../utils/api';
+import { api } from '../../lib/storage';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -44,9 +44,7 @@ export default function Recipes() {
 	// }, []);
 	return (
 		<main className='flex min-h-screen flex-col items-center justify-between p-24'>
-			<h1 className={`mb-3 text-2xl font-semibold`}>
-				Look at these recipes!
-			</h1>
+			<h1 className={`mb-3 text-2xl font-semibold`}>Add a recipe:</h1>
 			<RecipeForm onSubmit={saveData} />
 			<ul class='list-disc list-inside'>
 				{recipes.map((recipe, index) => {

@@ -30,13 +30,13 @@ exports.signupUser = async (req, res) => {
 			{ expiresIn: '1h' }
 		);
 
-		// Setze den JWT als httpOnly Cookie
-		res.cookie('tokenSignup', token, {
-			httpOnly: true,
-			sameSite: 'lax',
-			secure: false,
-			maxAge: 360000,
-		});
+		// // Setze den JWT als httpOnly Cookie
+		// res.cookie('tokenSignup', token, {
+		// 	httpOnly: true,
+		// 	sameSite: 'lax',
+		// 	secure: false,
+		// 	maxAge: 360000,
+		// });
 
 		// Sende den JWT und die Benutzerdaten zurück
 		res.status(201).json({
@@ -82,17 +82,17 @@ exports.loginUser = async (req, res) => {
 		// Erstelle einen neuen JWT
 		const token = jwt.sign(
 			{ id: user.id, name: user.name, email: user.email },
-			'your_jwt_secret',
+			process.env.JWT_SECRET,
 			{ expiresIn: '1h' }
 		);
 
-		// Setze den JWT als httpOnly Cookie
-		res.cookie('tokenLogin', token, {
-			httpOnly: true,
-			sameSite: 'lax',
-			secure: false,
-			maxAge: 360000,
-		});
+		// // Setze den JWT als httpOnly Cookie
+		// res.cookie('tokenLogin', token, {
+		// 	httpOnly: true,
+		// 	sameSite: 'lax',
+		// 	secure: false,
+		// 	maxAge: 360000,
+		// });
 
 		// Sende die Benutzerdaten zurück
 		res.status(200).json({
