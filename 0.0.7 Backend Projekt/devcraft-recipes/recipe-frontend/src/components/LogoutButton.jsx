@@ -1,6 +1,6 @@
 'use client';
 import { signOut } from 'next-auth/react';
-import { deleteSession } from '../lib/api';
+import { deleteSession } from '../lib/storage';
 
 const LogoutButton = () => {
 	return (
@@ -10,7 +10,7 @@ const LogoutButton = () => {
 				deleteSession();
 			}}
 		>
-			Sign out
+			SignOut
 		</button>
 	);
 };

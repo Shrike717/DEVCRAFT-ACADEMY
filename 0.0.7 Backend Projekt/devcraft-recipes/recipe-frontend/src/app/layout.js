@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
 		<html lang='en'>
 			<body className={inter.className}>
 				<SessionProvider>
-					<main className='flex flex-col items-center justify-between p-24'>
+					<main className='flex flex-col items-center justify-between p-8'>
 						<NavBar />
 						{children}
 					</main>

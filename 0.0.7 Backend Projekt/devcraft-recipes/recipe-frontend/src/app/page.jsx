@@ -1,21 +1,51 @@
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/authOptions';
-import axios from 'axios';
+import { getRecipes } from '../lib/recipes';
 
 const Home = async () => {
 	// Die Server Session holen:
 	const session = await getServerSession(authOptions);
 	console.log('[Home] session: ', session);
 
-	// // Making axios test request to backend to check if the cookie is set:
-	// const response = await axios.get('http://localhost:5000/set-cookie');
-	// console.log('[Home] response.headers: ', response.headers);
+	// Die Rezepte holen:
+	const recipes = await getRecipes();
+
+	// Um das zurückkommende Recipes Objekt vollständig zu loggen, müssen wir es in JSON umwandeln. Dazu nutzen wir die Methode JSON.stringify() und geben als zweiten Parameter null, 2 an. Das bedeutet, dass wir keine Transformation vornehmen wollen und die Einrückungstiefe 2 beträgt.
+	console.log('[Home] recipes: ', JSON.stringify(recipes, null, 2));
 
 	return (
 		<>
-			{session && <Link href={'/recipes'}>Add Recipe</Link>}
-			<h1>Home</h1>
+			<div className='mb-12'>
+				{session ? (
+					<Link
+						className='bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded '
+						href={'/recipes'}
+					>
+						Add Recipe
+					</Link>
+				) : (
+					<div className='h-6' /> // Platzhalter mit der gleichen Höhe wie der Button
+				)}
+			</div>
+
+			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
+				{recipes.recipes &&
+					Array.isArray(recipes.recipes.recipes) &&
+					recipes.recipes.recipes.map((recipe) => (
+						<div
+							key={recipe.id}
+							className='rounded overflow-hidden shadow-md p-6 bg-white'
+						>
+							<h2 className='font-bold text-lg mb-2'>
+								{recipe.name}
+							</h2>
+							<p className='text-gray-700 text-base'>
+								{recipe.description}
+							</p>
+						</div>
+					))}
+			</div>
 		</>
 	);
 };

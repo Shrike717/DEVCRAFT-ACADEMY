@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -8,6 +8,7 @@ function SignupForm() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [isClient, setIsClient] = useState(false);
 
 	const router = useRouter();
 
@@ -38,6 +39,15 @@ function SignupForm() {
 			);
 		}
 	};
+
+	// Die Komponente soll nur als Clientkomponente gerendert werden:
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
+
+	if (!isClient) {
+		return null;
+	}
 
 	return (
 		<form

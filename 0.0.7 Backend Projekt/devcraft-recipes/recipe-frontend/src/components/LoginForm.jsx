@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { setSession } from '../lib/api';
+import { setSession } from '../lib/storage';
 import { getSession } from 'next-auth/react'; // Holt die Session nach dem anmelden.
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ function LoginForm() {
 	const [password, setPassword] = useState('');
 	const router = useRouter();
 	const { data: session } = useSession();
-	console.log('[LoginForm] session: ', session);
+	const [isClient, setIsClient] = useState(false);
 
 	// console.log(name, email, password, confirmPassword);
 
@@ -50,6 +50,15 @@ function LoginForm() {
 			router.push('/');
 		}
 	}, [session]);
+
+	// Die Komponente soll nur als Clientkomponente gerendert werden:
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
+
+	if (!isClient) {
+		return null;
+	}
 
 	return (
 		<form
