@@ -64,7 +64,7 @@ function SignupForm() {
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							placeholder='Your Name:'
-							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm'
 						/>
 					</label>
 					<label className='flex flex-col'>
@@ -74,7 +74,7 @@ function SignupForm() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							placeholder='Your Email:'
-							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm'
 						/>
 					</label>
 					<label className='flex flex-col'>
@@ -84,7 +84,7 @@ function SignupForm() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							placeholder='Your Password:'
-							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm'
 						/>
 					</label>
 					<label className='flex flex-col'>
@@ -94,7 +94,7 @@ function SignupForm() {
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							placeholder='Confirm Password:'
-							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm'
 						/>
 					</label>
 					<button
