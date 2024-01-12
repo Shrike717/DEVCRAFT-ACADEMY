@@ -10,6 +10,7 @@ import LogoutButton from './LogoutButton';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/authOptions';
 import Image from 'next/image';
+import { CookingPot } from 'lucide-react';
 
 const NavBar = async () => {
 	// Die Server Session holen:
@@ -18,7 +19,15 @@ const NavBar = async () => {
 	if (session) {
 		return (
 			<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
-				<Link href={'/'}>Home</Link>
+				<Link href='/'>
+					<div className='flex items-center'>
+						<CookingPot
+							className='text-green-800'
+							strokeWidth={3}
+						/>
+						{/* <span className='ml-2 font-bold'>Recipes</span> */}
+					</div>
+				</Link>
 				<div className={'flex flex-row gap-2 md:gap-8 items-center'}>
 					<div className='flex flex-row gap-2 justify-center items-center'>
 						{session.user && session.user.image ? (
@@ -47,7 +56,12 @@ const NavBar = async () => {
 	}
 	return (
 		<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
-			<Link href={'/'}>Home</Link>
+			<Link href='/'>
+				<div className='flex items-center'>
+					<CookingPot className='text-green-800' strokeWidth={3} />
+					{/* <span className='ml-2 font-bold'>Recipes</span> */}
+				</div>
+			</Link>
 			<div className={'flex flex-row gap-2 md:gap-8 items-center'}>
 				<Link
 					className='w-full sm:w-auto flex items-center justify-center px-4 py-1 border border-transparent text-base font-medium rounded-sm text-white bg-blue-600 hover:bg-blue-700'
