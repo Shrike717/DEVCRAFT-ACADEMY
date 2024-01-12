@@ -13,10 +13,10 @@ export const getRecipes = async () => {
 			);
 		}
 
-		console.log(
-			'[getRecipes] API response: ',
-			JSON.stringify(response.data, null, 2)
-		);
+		// console.log(
+		// 	'[getRecipes] API response: ',
+		// 	JSON.stringify(response.data, null, 2)
+		// );
 
 		return response.data;
 	} catch (error) {

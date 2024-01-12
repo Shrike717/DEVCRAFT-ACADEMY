@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/authOptions';
 import { getRecipes } from '../lib/recipes';
+import { Clock } from 'lucide-react';
 
 const Home = async () => {
 	// Die Server Session holen:
@@ -12,14 +13,14 @@ const Home = async () => {
 	const recipes = await getRecipes();
 
 	// Um das zurückkommende Recipes Objekt vollständig zu loggen, müssen wir es in JSON umwandeln. Dazu nutzen wir die Methode JSON.stringify() und geben als zweiten Parameter null, 2 an. Das bedeutet, dass wir keine Transformation vornehmen wollen und die Einrückungstiefe 2 beträgt.
-	console.log('[Home] recipes: ', JSON.stringify(recipes, null, 2));
+	// console.log('[Home] recipes: ', JSON.stringify(recipes, null, 2));
 
 	return (
 		<>
 			<div className='mb-12'>
 				{session ? (
 					<Link
-						className='bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-sm'
+						className='bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-sm'
 						href={'/recipes'}
 					>
 						Add Recipe
@@ -43,9 +44,12 @@ const Home = async () => {
 							<p className='text-gray-700 text-base'>
 								{recipe.description}
 							</p>
-							<p className='text-gray-700 text-base'>
-								{recipe.cookingTime}
-							</p>
+							<div className='flex items-center'>
+								<Clock strokeWidth={2} width={18} height={18} />
+								<p className='text-gray-700 text-base ml-2'>
+									{recipe.cookingTime} min
+								</p>
+							</div>
 						</div>
 					))}
 			</div>
