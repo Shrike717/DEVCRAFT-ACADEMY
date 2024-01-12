@@ -19,7 +19,7 @@ const Home = async () => {
 			<div className='mb-12'>
 				{session ? (
 					<Link
-						className='bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-sm '
+						className='bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-sm'
 						href={'/recipes'}
 					>
 						Add Recipe
@@ -35,13 +35,16 @@ const Home = async () => {
 					recipes.recipes.recipes.map((recipe) => (
 						<div
 							key={recipe.id}
-							className='rounded overflow-hidden shadow-md p-6 bg-white'
+							className='rounded overflow-hidden shadow-md p-6 bg-slate-50'
 						>
 							<h2 className='font-bold text-lg mb-2'>
 								{recipe.name}
 							</h2>
 							<p className='text-gray-700 text-base'>
 								{recipe.description}
+							</p>
+							<p className='text-gray-700 text-base'>
+								{recipe.cookingTime}
 							</p>
 						</div>
 					))}

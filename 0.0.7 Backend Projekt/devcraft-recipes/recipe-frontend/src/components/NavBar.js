@@ -23,7 +23,9 @@ const NavBar = async () => {
 					<div className='flex flex-row gap-2 justify-center items-center'>
 						{session.user && session.user.image ? (
 							<Image
-								className={'w-[30px] h-[30px] rounded-[50%] '}
+								className={
+									'w-[30px] h-[30px] rounded-[50%] flex-shrink-0'
+								}
 								alt={'Profilbild'}
 								src={session.user.image}
 								width={30}
@@ -34,11 +36,11 @@ const NavBar = async () => {
 								{session.user && session.user.name[0]}
 							</span>
 						)}
-						<span className={'sm:block hidden'}>
+						<span className={'hidden md:block flex-shrink-0'}>
 							{session.user && session.user.name}
 						</span>
 					</div>
-					<LogoutButton />
+					<LogoutButton className='w-auto flex-shrink-0 flex-grow-0' />
 				</div>
 			</nav>
 		);
@@ -47,8 +49,12 @@ const NavBar = async () => {
 		<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
 			<Link href={'/'}>Home</Link>
 			<div className={'flex flex-row gap-2 md:gap-8 items-center'}>
-				<Link href={'/signup'}>SignUp</Link>
-				<Link href={'/login'}>LogIn</Link>
+				<Link
+					className='w-full sm:w-auto flex items-center justify-center px-4 py-1 border border-transparent text-base font-medium rounded-sm text-white bg-blue-600 hover:bg-blue-700'
+					href={'/login'}
+				>
+					Sign In
+				</Link>
 			</div>
 		</nav>
 	);
