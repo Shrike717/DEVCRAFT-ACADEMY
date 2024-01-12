@@ -18,7 +18,7 @@ const NavBar = async () => {
 	console.log('[Navbar] session: ', session);
 	if (session) {
 		return (
-			<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
+			<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm rounded-md'>
 				<Link href='/'>
 					<div className='flex items-center'>
 						<CookingPot
@@ -55,7 +55,7 @@ const NavBar = async () => {
 		);
 	}
 	return (
-		<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm'>
+		<nav className='flex flex-row justify-between h-[60px] w-full mb-8 items-center bg-slate-50 px-4 shadow-sm rounded-md'>
 			<Link href='/'>
 				<div className='flex items-center'>
 					<CookingPot className='text-green-800' strokeWidth={3} />

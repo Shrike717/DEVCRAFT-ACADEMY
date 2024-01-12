@@ -69,7 +69,7 @@ function LoginForm() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							placeholder='Your Email:'
-							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm'
 						/>
 					</label>
 					<label className='flex flex-col'>
@@ -79,7 +79,7 @@ function LoginForm() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							placeholder='Your Password:'
-							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+							className='mt-1 block w-full rounded-sm border-gray-300 shadow-sm'
 						/>
 					</label>
 					<button
