@@ -28,7 +28,7 @@ const NavBar = async () => {
 						{/* <span className='ml-2 font-bold'>Recipes</span> */}
 					</div>
 				</Link>
-				<div className={'flex flex-row gap-2 md:gap-8 items-center'}>
+				<div className={'flex flex-row sm:gap-4 gap-2 items-center'}>
 					<div className='flex flex-row gap-2 justify-center items-center'>
 						{session.user && session.user.image ? (
 							<Image
