@@ -6,11 +6,13 @@ export default function RecipeForm({ onSubmit }) {
 	const submitRecipe = (event) => {
 		event.preventDefault();
 		const formData = new FormData(event.target);
-		console.log('[Recipe Form] formData:', Object.fromEntries(formData));
+		// console.log('[Recipe Form] formData:', Object.fromEntries(formData));
 
 		onSubmit({
 			name: formData.get('name'),
+			description: formData.get('description'),
 			steps: formData.get('steps'),
+			cookingTime: formData.get('cookingTime'),
 			ingredients: [...Array(ingredientAmount).keys()].map((index) => {
 				return {
 					name: formData.get(`name-${index}`),
@@ -35,6 +37,17 @@ export default function RecipeForm({ onSubmit }) {
 				></input>
 			</div>
 			<div className='flex flex-col gap-2 justify-start items-start mb-6'>
+				<label htmlFor='description' className='text-sm'>
+					Description:
+				</label>
+				<input
+					id='description'
+					name='description'
+					placeholder='Description'
+					className='text-sm w-full'
+				></input>
+			</div>
+			<div className='flex flex-col gap-2 justify-start items-start mb-6'>
 				<label htmlFor='steps' className='text-sm'>
 					Steps:
 				</label>
@@ -44,6 +57,18 @@ export default function RecipeForm({ onSubmit }) {
 					placeholder='1. Mash Bananas'
 					className='text-sm w-full'
 				></textarea>
+			</div>
+			<div className='flex flex-col gap-2 justify-start items-start mb-6'>
+				<label htmlFor='cookingTime' className='text-sm'>
+					Cooking Time (minutes):
+				</label>
+				<input
+					id='cookingTime'
+					name='cookingTime'
+					placeholder='30'
+					type='number'
+					className='text-sm w-full'
+				></input>
 			</div>
 			{[...Array(ingredientAmount).keys()].map((index) => {
 				return (
