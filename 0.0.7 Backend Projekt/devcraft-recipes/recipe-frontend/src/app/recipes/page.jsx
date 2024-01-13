@@ -73,40 +73,51 @@ export default function Recipes() {
 	// 	</main>
 	// );
 
+	// return (
+	// 	<main className='flex min-h-screen flex-col items justify-start p-24 bg-slate-50 mt-[4.8rem] rounded-md shadow-md'>
+	// 		<h1 className='mb-4 text-xl font-semibold text-gray-700'>
+	// 			Add a recipe:
+	// 		</h1>
+	// 		<div className='w-full '>
+	// 			<RecipeForm onSubmit={saveData} />
+	// 		</div>
+	// 		{/* <div className='w-full max-w-lg mt-8 bg-white p-6 rounded shadow'>
+	// 			<ul class='list-disc list-inside text-gray-700'>
+	// 				{recipes.map((recipe, index) => {
+	// 					return (
+	// 						<li key={index} className='mb-2'>
+	// 							<span class='font-bold'>{recipe.name}</span>
+	// 							<ul class='list-disc list-inside pl-4'>
+	// 								{recipe.ingredients.map(
+	// 									(ingredient, ingredientIndex) => {
+	// 										return (
+	// 											<li key={ingredientIndex}>
+	// 												<span class='font-bold'>
+	// 													{ingredient.name}
+	// 												</span>
+	// 												: {ingredient.amount}{' '}
+	// 												{ingredient.units}
+	// 											</li>
+	// 										);
+	// 									}
+	// 								)}
+	// 							</ul>
+	// 						</li>
+	// 					);
+	// 				})}
+	// 			</ul>
+	// 		</div> */}
+	// 	</main>
+	// );
+
 	return (
-		<main className='flex min-h-screen flex-col items justify-start p-24 bg-slate-50 mt-[4.8rem] rounded-md shadow-md'>
-			<h1 className='mb-4 text-xl font-semibold text-gray-700'>
+		<main className='flex flex-col items-center justify-start p-6 md:p-24 min-h-screen bg-slate-50 mt-12 rounded-md shadow-md'>
+			<h1 className='mb-4 text-xl md:text-2xl font-semibold text-gray-700'>
 				Add a recipe:
 			</h1>
-			<div className='w-full '>
+			<div className='w-full'>
 				<RecipeForm onSubmit={saveData} />
 			</div>
-			{/* <div className='w-full max-w-lg mt-8 bg-white p-6 rounded shadow'>
-				<ul class='list-disc list-inside text-gray-700'>
-					{recipes.map((recipe, index) => {
-						return (
-							<li key={index} className='mb-2'>
-								<span class='font-bold'>{recipe.name}</span>
-								<ul class='list-disc list-inside pl-4'>
-									{recipe.ingredients.map(
-										(ingredient, ingredientIndex) => {
-											return (
-												<li key={ingredientIndex}>
-													<span class='font-bold'>
-														{ingredient.name}
-													</span>
-													: {ingredient.amount}{' '}
-													{ingredient.units}
-												</li>
-											);
-										}
-									)}
-								</ul>
-							</li>
-						);
-					})}
-				</ul>
-			</div> */}
 		</main>
 	);
 }
