@@ -9,6 +9,9 @@ const Home = async () => {
 	const session = await getServerSession(authOptions);
 	console.log('[Home] session: ', session);
 
+	// Die User Id aus dem Session Objekt holen:
+	const userId = session.user.id;
+
 	// Die Rezepte holen:
 	const recipes = await getRecipes();
 
