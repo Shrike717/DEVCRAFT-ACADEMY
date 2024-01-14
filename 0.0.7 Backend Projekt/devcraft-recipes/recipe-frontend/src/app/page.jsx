@@ -9,9 +9,6 @@ const Home = async () => {
 	const session = await getServerSession(authOptions);
 	console.log('[Home] session: ', session);
 
-	// Die User Id aus dem Session Objekt holen:
-	const userId = session.user.id;
-
 	// Die Rezepte holen:
 	const recipes = await getRecipes();
 
@@ -32,7 +29,6 @@ const Home = async () => {
 					<div className='h-6' /> // Platzhalter mit der gleichen Höhe wie der Button
 				)}
 			</div>
-
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8'>
 				{recipes.recipes &&
 					Array.isArray(recipes.recipes.recipes) &&
@@ -42,10 +38,21 @@ const Home = async () => {
 							className='relative rounded overflow-hidden shadow-md p-6 rounded-t-xl bg-slate-50'
 						>
 							<div className='absolute top-0 left-0 right-0 h-[9rem] rounded-t-xl bg-custom-card' />
-							<h2 className='font-bold text-base my-2 pt-36'>
+							<h2
+								className='font-bold text-base my-2 pt-36 overflow-hidden
+								whitespace-nowrap
+								sm:w-60 w-52
+							    overflow-ellipsis'
+							>
 								{recipe.name}
 							</h2>
-							<p className='text-gray-700 text-sm'>
+
+							<p
+								className='text-gray-700 text-sm overflow-hidden
+								whitespace-nowrap
+								sm:w-60 w-52
+							    overflow-ellipsis'
+							>
 								{recipe.description}
 							</p>
 							<div className='flex justify-between items-center mt-4'>
