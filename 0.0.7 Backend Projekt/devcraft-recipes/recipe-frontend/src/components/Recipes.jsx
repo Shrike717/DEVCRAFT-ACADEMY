@@ -1,16 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { createRecipe } from '../lib/recipes';
 import RecipeForm from './RecipeForm';
 import { useSession } from 'next-auth/react';
-import { getSession } from 'next-auth/react'; // Holt die Session nach dem anmelden.
 
 export default function Recipes() {
 	// const [recipes, setRecipes] = useState([]);
 	const { data: session } = useSession();
 
-	console.log('[Recipes Component] session: ', session);
+	// console.log('[Recipes Component] session: ', session);
 
 	// const loadData = () => {
 	// 	fetch(`${api}/recipes`)
