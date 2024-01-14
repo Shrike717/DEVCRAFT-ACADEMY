@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/authOptions';
 import { getRecipes } from '../lib/recipes';
 import { Clock, Bolt, XCircle } from 'lucide-react';
+import ClientSession from '../components/ClientSession';
 
 const Home = async () => {
 	// Die Server Session holen:
@@ -29,6 +30,10 @@ const Home = async () => {
 					<div className='h-6' /> // Platzhalter mit der gleichen Höhe wie der Button
 				)}
 			</div>
+			{/* <div className='flex flex-col gap-1 pt-4'>
+				<h2 className='text-lg'>Client Session:</h2>
+				<ClientSession />
+			</div> */}
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8'>
 				{recipes.recipes &&
 					Array.isArray(recipes.recipes.recipes) &&
